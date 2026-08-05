@@ -6,15 +6,13 @@ import sys
 sys.path.insert(0, ".")
 
 from config import *
-from models import *
 from data_loader import *
-from engines.claim_engine import extract_claim_text_only, _fuzzy_match_part, _fuzzy_match_issue
-from engines.evidence_engine import check_evidence_sufficiency
-from engines.quality_engine import assess_image_quality
-from engines.fraud_engine import detect_fraud
-from engines.risk_engine import get_user_risk_flags, get_risk_summary
+from engines.claim_engine import _fuzzy_match_issue, _fuzzy_match_part, extract_claim_text_only
 from engines.decision_engine import make_decision
-from engines.explain_engine import polish_output
+from engines.fraud_engine import detect_fraud
+from engines.quality_engine import assess_image_quality
+from engines.risk_engine import get_user_risk_flags
+from models import *
 
 print("=" * 60)
 print("DRY-RUN VALIDATION")
@@ -214,12 +212,15 @@ assert row["risk_flags"] == "blurry_image;manual_review_required;user_history_ri
 print("[OK] Output validation: risk flags sorted and deduplicated")
 
 # 10. Test CSV output format
-from data_loader import write_output_csv
-import tempfile, os
+import csv
+import os
+import tempfile
 from pathlib import Path
+
+from data_loader import write_output_csv
+
 tmp = Path(tempfile.gettempdir()) / "test_output.csv"
 write_output_csv([row], tmp)
-import csv
 with open(tmp, "r") as f:
     reader = csv.DictReader(f)
     cols = reader.fieldnames
@@ -266,5 +267,5 @@ print(f"[OK] Total test images: {total_images}")
 print("\n" + "=" * 60)
 print("ALL VALIDATION TESTS PASSED [OK]")
 print("=" * 60)
-print(f"\nReady to run: python main.py")
-print(f"Set GEMINI_API_KEY first: $env:GEMINI_API_KEY='your-key-here'")
+print("\nReady to run: python main.py")
+print("Set GEMINI_API_KEY first: $env:GEMINI_API_KEY='your-key-here'")
