@@ -102,3 +102,14 @@ For high-volume production use cases (e.g., thousands of claims per day):
 - **File-based caching**: SHA-256 keyed JSON cache, re-runs skip processed claims
 - **Enum enforcement**: All output fields validated against allowed values
 - **Graceful degradation**: API failures → "unknown" fallback, never crashes
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [**PROJECT_DESIGN.md**](docs/PROJECT_DESIGN.md) | Master design document — architecture, tech stack, limitations, enterprise roadmap, Mermaid diagrams |
+| [architecture.md](docs/architecture.md) | 10-engine pipeline deep dive |
+| [cloud_orchestration.md](docs/cloud_orchestration.md) | Apache Airflow DAG integration guide |
+| [IMPLEMENTATION_OVERVIEW.md](code/IMPLEMENTATION_OVERVIEW.md) | File-by-file code breakdown with honest assessments |
+| [problem_statement.md](problem_statement.md) | Original product requirements |
+
