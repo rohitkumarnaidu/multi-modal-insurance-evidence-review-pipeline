@@ -150,12 +150,13 @@ def load_image_for_vision(
     try:
         from PIL import Image
 
-        with Image.open(full_path) as image:
-            image = image.convert("RGB")
-            if max(image.size) > max_long_edge:
-                image.thumbnail((max_long_edge, max_long_edge), Image.LANCZOS)
+        with open(full_path, "rb") as f:
+            img: Image.Image = Image.open(f)
+            # Resize if too large
+            if max(img.size) > max_long_edge:
+                img.thumbnail((max_long_edge, max_long_edge), Image.Resampling.LANCZOS)
             buffer = io.BytesIO()
-            image.save(buffer, format="JPEG", quality=jpeg_quality, optimize=True)
+            img.convert("RGB").save(buffer, format="JPEG", quality=jpeg_quality, optimize=True)
         return base64.b64encode(buffer.getvalue()).decode("utf-8"), "image/jpeg"
     except Exception as e:
         logger.error(f"Error preparing image {full_path} for vision: {e}")

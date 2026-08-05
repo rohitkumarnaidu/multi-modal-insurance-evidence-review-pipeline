@@ -208,7 +208,7 @@ OUTPUT: ONLY valid JSON. No preamble, no markdown, no explanation before the JSO
 def get_allowed_parts_str(claim_object: str) -> str:
     """Get formatted string of allowed object_part values for a claim object type."""
     from config import OBJECT_PARTS_BY_TYPE
-    parts = OBJECT_PARTS_BY_TYPE.get(claim_object, set())
+    parts: set[str] | frozenset[str] = OBJECT_PARTS_BY_TYPE.get(claim_object, set())
     return ", ".join(sorted(parts))
 
 

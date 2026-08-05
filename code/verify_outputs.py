@@ -29,7 +29,7 @@ for fname in files:
     cols = list(reader[0].keys()) if reader else []
     unknowns = len([r for r in reader if r.get("issue_type") == "unknown" and r.get("object_part") == "unknown"])
     
-    statuses = {}
+    statuses: dict[str, int] = {}
     for r in reader:
         s = r["claim_status"]
         statuses[s] = statuses.get(s, 0) + 1

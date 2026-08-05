@@ -82,13 +82,13 @@ def assess_image_quality(
             any_edited = True
 
     # Build quality flags
-    if any_blurry and (usable_count == 0 or blurry_usable == usable_count):
+    if any_blurry:
         quality_flags.append("blurry_image")
-    if any_cropped and (usable_count == 0 or cropped_usable == usable_count):
+    if any_cropped:
         quality_flags.append("cropped_or_obstructed")
-    if any_low_light and (usable_count == 0 or low_light_usable == usable_count):
+    if any_low_light:
         quality_flags.append("low_light_or_glare")
-    if any_wrong_angle and (usable_count == 0 or wrong_angle_usable == usable_count):
+    if any_wrong_angle:
         quality_flags.append("wrong_angle")
     if any_text_instruction:
         quality_flags.append("text_instruction_present")

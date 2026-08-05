@@ -191,7 +191,7 @@ class OpenAICompatClient:
                 if self.provider_name.lower() in self.JSON_FORMAT_PROVIDERS:
                     kwargs["response_format"] = {"type": "json_object"}
 
-                response = self._client.chat.completions.create(**kwargs)
+                response = self._client.chat.completions.create(**kwargs)  # type: ignore
 
                 # Track tokens
                 if response.usage:
@@ -321,11 +321,11 @@ class OpenAICompatClient:
         if len(raw) <= max_size_bytes:
             return b64_data, "image/jpeg"
 
-        img = Image.open(io.BytesIO(raw))
+        img: Image.Image = Image.open(io.BytesIO(raw))
         # Resize if very large
         max_dim = 1024
         if max(img.size) > max_dim:
-            img.thumbnail((max_dim, max_dim), Image.LANCZOS)
+            img.thumbnail((max_dim, max_dim), Image.Resampling.LANCZOS)
 
         # Convert to RGB (strip alpha) and compress as JPEG
         if img.mode in ("RGBA", "P"):

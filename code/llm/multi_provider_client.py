@@ -15,7 +15,7 @@ Also tracks which provider handled each call for comparison.
 from __future__ import annotations
 
 import logging
-from typing import Optional
+from typing import Optional, Any
 
 from config import (
     ENSEMBLE_ENABLED,
@@ -55,7 +55,7 @@ class MultiProviderClient:
 
     def __init__(self, only_provider: str | None = None):
         self.cache = ResponseCache()
-        self.providers = []
+        self.providers: list[tuple[str, Any]] = []
         self.provider_usage: dict[str, int] = {}  # provider → success count
         self.last_success_provider: str | None = None
         self.second_opinion_requests = 0
@@ -304,7 +304,7 @@ class MultiProviderClient:
                     old_temp = client.text_kwargs['temperature']
                     client.text_kwargs['temperature'] = temperature
                 result = client.call_text(prompt, use_cache=False)
-                if old_temp is not None:
+                if old_temp is not None and hasattr(client, 'text_kwargs'):
                     client.text_kwargs['temperature'] = old_temp
                 if result is not None:
                     return result

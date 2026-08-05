@@ -53,13 +53,10 @@ async def health():
 async def process(req: ProcessRequest):
     try:
         claim_input = ClaimInput(
-            claim_id=req.claim_id,
-            claim_object=req.claim_object,
-            claimed_issue_type=req.claimed_issue_type,
-            claimed_object_part=req.claimed_object_part,
-            claim_conversation=req.claim_conversation,
             user_id=req.user_id,
-            image_paths=req.image_paths,
+            image_paths=";".join(req.image_paths),
+            user_claim=req.claim_conversation,
+            claim_object=req.claim_object,
         )
         output = process_claim(claim_input)
         row = output.to_csv_row()

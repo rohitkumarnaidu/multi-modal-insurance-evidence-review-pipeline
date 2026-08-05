@@ -72,7 +72,7 @@ def extract_claim_with_llm(
         return pre_scan
 
     # Step 3: Merge results
-    allowed_parts = OBJECT_PARTS_BY_TYPE.get(claim.claim_object, set())
+    allowed_parts: set[str] | frozenset[str] = OBJECT_PARTS_BY_TYPE.get(claim.claim_object, set())
 
     claimed_part = result.get("claimed_object_part", "unknown")
     if claimed_part not in allowed_parts:
@@ -106,7 +106,7 @@ def extract_claim_with_llm(
     return extraction
 
 
-def _fuzzy_match_part(raw: str, allowed: set[str]) -> str:
+def _fuzzy_match_part(raw: str, allowed: set[str] | frozenset[str]) -> str:
     """Best-effort normalization of object_part to allowed values.
     
     Uses alias table → partial string match → sentence transformer embedding

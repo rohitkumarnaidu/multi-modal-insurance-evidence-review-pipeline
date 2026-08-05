@@ -23,6 +23,8 @@ import argparse
 import csv
 import json
 import os
+from collections import Counter
+from typing import Any
 import subprocess
 import sys
 from collections import Counter
@@ -106,10 +108,10 @@ def generate_comparison_report(providers: list[str]):
         return
 
     # Get all user_ids
-    all_users = set()
+    all_users_set: set[str] = set()
     for data in outputs.values():
-        all_users.update(data.keys())
-    all_users = sorted(all_users)
+        all_users_set.update(data.keys())
+    all_users = sorted(all_users_set)
 
     # ── Build comparison CSV ─────────────────────────────────────────────
     comparison_rows = []
@@ -189,7 +191,7 @@ def generate_comparison_report(providers: list[str]):
     # ── Per-model stats ──────────────────────────────────────────────────
     print(f"\n  Per-Model Status Distribution:")
     for p in active_providers:
-        statuses = Counter()
+        statuses: Counter[str] = Counter()
         unknowns = 0
         for uid, row in outputs[p].items():
             status = row.get("claim_status", "?")
@@ -207,8 +209,8 @@ def generate_comparison_report(providers: list[str]):
     consensus_rows = []
     for uid in all_users:
         # Take majority vote for claim_status
-        votes = Counter()
-        best_row = None
+        votes: Counter[str] = Counter()
+        best_row: dict[str, Any] | None = None
         for p in active_providers:
             if uid in outputs[p]:
                 status = outputs[p][uid].get("claim_status", "")

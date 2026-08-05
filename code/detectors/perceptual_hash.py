@@ -61,8 +61,12 @@ def find_duplicates(image_paths: list[str]) -> list[tuple[int, int, int]]:
         for j in range(i + 1, len(hashes)):
             if not hashes[j]:
                 continue
-            h1 = imagehash.hex_to_hash(hashes[i])
-            h2 = imagehash.hex_to_hash(hashes[j])
+            h1_str = hashes[i]
+            h2_str = hashes[j]
+            if not h1_str or not h2_str:
+                continue
+            h1 = imagehash.hex_to_hash(h1_str)
+            h2 = imagehash.hex_to_hash(h2_str)
             diff = h1 - h2
             if diff < 10:  # Threshold for near-duplicates
                 duplicates.append((i, j, diff))

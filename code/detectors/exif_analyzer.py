@@ -14,7 +14,7 @@ def analyze_exif(image_path: str) -> dict:
     }
     try:
         img = Image.open(image_path)
-        exif_data = img._getexif()
+        exif_data = img.getexif()
     except Exception:
         return result
 

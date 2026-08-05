@@ -16,9 +16,9 @@ for uid in sorted(truth.keys()):
     t = truth[uid]
     total += 1
     mismatches = []
-    for f in fields:
-        if p[f] != t[f]:
-            mismatches.append(f + ":" + p[f] + "!=" + t[f])
+    for field in fields:
+        if p[field] != t[field]:
+            mismatches.append(field + ":" + p[field] + "!=" + t[field])
     if mismatches:
         print(uid + ": " + " | ".join(mismatches))
     else:

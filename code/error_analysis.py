@@ -21,7 +21,7 @@ print()
 # Show duplicate user_ids in output_nvidia.csv
 with open(os.path.join(dataset, "output_nvidia.csv"), "r", encoding="utf-8-sig") as f:
     all_rows = list(csv.DictReader(f))
-uid_counts = {}
+uid_counts: dict[str, int] = {}
 for r in all_rows:
     uid = r["user_id"]
     uid_counts[uid] = uid_counts.get(uid, 0) + 1

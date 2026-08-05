@@ -59,8 +59,8 @@ def partial_credit_severity(
         ("unknown", "none"): 0.0, ("unknown", "low"): 0.0, ("unknown", "medium"): 0.0, ("unknown", "high"): 0.0, ("unknown", "unknown"): 1.0,
     }
 
-    scores = []
-    per_row = []
+    scores: list[float] = []
+    per_row: list[dict[str, Any]] = []
     for i, (p, g) in enumerate(zip(predictions, ground_truth)):
         p = p.strip().lower()
         g = g.strip().lower()
@@ -78,7 +78,7 @@ def partial_credit_severity(
         "partial_credit_accuracy": round(avg, 4),
         "exact_match_accuracy": round(sum(1 for s in scores if s == 1.0) / max(1, len(scores)), 4),
         "average_score": round(avg, 4),
-        "per_row": [r for r in per_row if r["score"] < 1.0][:10],
+        "per_row": [r for r in per_row if float(r["score"]) < 1.0][:10],
     }
 
 
@@ -114,8 +114,8 @@ def partial_credit_object_part(
                     return True
         return False
 
-    scores = []
-    per_row = []
+    scores: list[float] = []
+    per_row: list[dict[str, Any]] = []
     for i, (p, g) in enumerate(zip(predictions, ground_truth)):
         p = p.strip().lower()
         g = g.strip().lower()
@@ -141,7 +141,7 @@ def partial_credit_object_part(
     return {
         "partial_credit_accuracy": round(avg, 4),
         "exact_match_accuracy": round(sum(1 for s in scores if s == 1.0) / max(1, len(scores)), 4),
-        "per_row": [r for r in per_row if r["score"] < 1.0][:10],
+        "per_row": [r for r in per_row if float(r["score"]) < 1.0][:10],
     }
 
 
@@ -154,7 +154,7 @@ def risk_flags_f1(
     total_recall_num = 0
     total_recall_den = 0
 
-    per_row = []
+    per_row: list[dict[str, Any]] = []
     for p, t in zip(pred_flags, true_flags):
         pred_set = _parse_flags(p)
         true_set = _parse_flags(t)
@@ -185,14 +185,14 @@ def risk_flags_f1(
     micro_f1 = (
         2 * micro_precision * micro_recall / max(0.001, micro_precision + micro_recall)
     )
-    macro_f1 = sum(r["f1"] for r in per_row) / max(1, len(per_row))
+    macro_f1 = sum(float(r["f1"]) for r in per_row) / max(1, len(per_row))
 
     return {
         "micro_precision": round(micro_precision, 4),
         "micro_recall": round(micro_recall, 4),
         "micro_f1": round(micro_f1, 4),
         "macro_f1": round(macro_f1, 4),
-        "per_row": [r for r in per_row if r["f1"] < 1.0][:10],
+        "per_row": [r for r in per_row if float(r["f1"]) < 1.0][:10],
     }
 
 
@@ -206,7 +206,7 @@ def confusion_matrix(
         + [g.strip().lower() for g in ground_truth]
     ))
 
-    matrix = {label: Counter() for label in all_labels}
+    matrix: dict[str, Counter[str]] = {label: Counter() for label in all_labels}
     for p, g in zip(predictions, ground_truth):
         matrix[g.strip().lower()][p.strip().lower()] += 1
 

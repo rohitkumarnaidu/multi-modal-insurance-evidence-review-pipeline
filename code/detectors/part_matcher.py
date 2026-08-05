@@ -69,7 +69,7 @@ def _build_part_embeddings():
 
 def match_part(
     detected_part: str,
-    allowed_parts: set[str],
+    allowed_parts: set[str] | frozenset[str],
     threshold: float = 0.6,
 ) -> tuple[str, float]:
     """Match a detected part name to the closest allowed part.

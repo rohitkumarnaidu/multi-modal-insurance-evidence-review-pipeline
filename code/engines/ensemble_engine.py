@@ -74,7 +74,7 @@ def run_ensemble(
 
         votes = {}
         for field in VOTING_FIELDS:
-            field_votes = Counter()
+            field_votes: Counter[str] = Counter()
             for p in providers:
                 val = provider_rows[p][i].get(field, "unknown").strip().lower()
                 if val:
@@ -172,7 +172,7 @@ def analyze_ensemble_agreement(
     num_rows = len(list(provider_rows.values())[0])
 
     # Pairwise agreement per field
-    pairwise = {}
+    pairwise: dict[str, dict[str, float]] = {}
     for field in VOTING_FIELDS:
         pairwise[field] = {}
         for p1 in providers:
@@ -190,7 +190,7 @@ def analyze_ensemble_agreement(
                     pairwise[field][f"{p1}_vs_{p2}"] = round(agreements / max(1, total), 4)
 
     # Per-provider majority agreement
-    majority_agreement = {p: {} for p in providers}
+    majority_agreement: dict[str, dict[str, float]] = {p: {} for p in providers}
     for field in VOTING_FIELDS:
         for p in providers:
             matches = 0

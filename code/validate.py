@@ -216,7 +216,8 @@ print("[OK] Output validation: risk flags sorted and deduplicated")
 # 10. Test CSV output format
 from data_loader import write_output_csv
 import tempfile, os
-tmp = os.path.join(tempfile.gettempdir(), "test_output.csv")
+from pathlib import Path
+tmp = Path(tempfile.gettempdir()) / "test_output.csv"
 write_output_csv([row], tmp)
 import csv
 with open(tmp, "r") as f:

@@ -115,7 +115,7 @@ def analyze_single_image(
     result = normalize_vision_payload(result, claim.claim_object)
 
     # Parse VLM response into ImageAnalysis (with fuzzy matching for robustness)
-    allowed_parts = OBJECT_PARTS_BY_TYPE.get(claim.claim_object, set())
+    allowed_parts: set[str] | frozenset[str] = OBJECT_PARTS_BY_TYPE.get(claim.claim_object, set())
     visible_part = result.get("visible_object_part", "unknown")
     if visible_part not in allowed_parts:
         visible_part = _fuzzy_match_part(visible_part, allowed_parts)

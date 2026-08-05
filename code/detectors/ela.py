@@ -33,7 +33,7 @@ def analyze_ela(image_path: str, quality: int = 75, threshold: float = 15.0) -> 
             - ela_description: str — human-readable summary
     """
     try:
-        img = Image.open(image_path)
+        img: Image.Image = Image.open(image_path)
 
         if img.mode != "RGB":
             img = img.convert("RGB")
@@ -47,7 +47,7 @@ def analyze_ela(image_path: str, quality: int = 75, threshold: float = 15.0) -> 
         stat = ImageStat.Stat(diff)
         mean_diff = sum(stat.mean) / len(stat.mean) if stat.mean else 0.0
         extrema = diff.getextrema()
-        max_diff = max((e[1] for e in extrema if e is not None), default=0.0)
+        max_diff = max((e[1] for e in extrema if e is not None and isinstance(e, tuple)), default=0.0) # type: ignore
 
         has_anomaly = mean_diff > threshold
 

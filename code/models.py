@@ -293,7 +293,7 @@ class ClaimOutput(BaseModel):
 
     def validate_object_part(self, claim_object: str) -> str:
         """Validate object_part against claim_object's allowed values."""
-        allowed = OBJECT_PARTS_BY_TYPE.get(claim_object, set())
+        allowed: set[str] | frozenset[str] = OBJECT_PARTS_BY_TYPE.get(claim_object, set())
         if self.object_part not in allowed:
             logger.warning(
                 f"Normalizing invalid object_part '{self.object_part}' "

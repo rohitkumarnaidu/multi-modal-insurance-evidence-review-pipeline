@@ -189,7 +189,7 @@ class GeminiClient:
                     return None
 
                 # Build content parts
-                contents = []
+                contents: list[Any] = []
                 if images:
                     for img in images:
                         part = self._genai.types.Part.from_bytes(
