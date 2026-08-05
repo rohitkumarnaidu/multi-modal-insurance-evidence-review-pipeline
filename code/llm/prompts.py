@@ -86,6 +86,11 @@ ALLOWED issue_type VALUES: dent, scratch, crack, glass_shatter, broken_part, mis
 ALLOWED object_part VALUES FOR {claim_object}:
 {allowed_parts}
 
+PART DEFINITIONS (CRITICAL):
+- Package: "seal" is the tape/sticker closing the box. "package_corner" is the cardboard corner. "contents" are the items inside.
+- Laptop: "hinge" connects screen to base. "screen" is the display. "corner" is the chassis edge. "body" is the general casing.
+- Car: "headlight" is the lamp. "front_bumper" is the plastic fascia below the lights. "door" is the side panel. "hood" is the engine cover.
+
 Reason through these steps in your "reasoning" field, then fill in the JSON:
 
 Step 1 — Object identification:

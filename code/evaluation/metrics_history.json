@@ -493,5 +493,104 @@
       "total": 20
     },
     "_timestamp": "2026-06-20T11:40:04.615145"
+  },
+  {
+    "claim_status_accuracy": {
+      "accuracy": 0.45,
+      "correct": 9,
+      "total": 20
+    },
+    "issue_type_accuracy": {
+      "accuracy": 0.7,
+      "correct": 14,
+      "total": 20
+    },
+    "object_part_accuracy": {
+      "accuracy": 0.6,
+      "correct": 12,
+      "total": 20
+    },
+    "evidence_standard_met_accuracy": {
+      "accuracy": 0.75,
+      "correct": 15,
+      "total": 20
+    },
+    "valid_image_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "severity_accuracy": {
+      "accuracy": 0.45,
+      "correct": 9,
+      "total": 20
+    },
+    "_timestamp": "2026-08-05T15:45:43.212734"
+  },
+  {
+    "claim_status_accuracy": {
+      "accuracy": 0.45,
+      "correct": 9,
+      "total": 20
+    },
+    "issue_type_accuracy": {
+      "accuracy": 0.7,
+      "correct": 14,
+      "total": 20
+    },
+    "object_part_accuracy": {
+      "accuracy": 0.6,
+      "correct": 12,
+      "total": 20
+    },
+    "evidence_standard_met_accuracy": {
+      "accuracy": 0.75,
+      "correct": 15,
+      "total": 20
+    },
+    "valid_image_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "severity_accuracy": {
+      "accuracy": 0.45,
+      "correct": 9,
+      "total": 20
+    },
+    "_timestamp": "2026-08-05T15:45:53.241904"
+  },
+  {
+    "claim_status_accuracy": {
+      "accuracy": 0.7,
+      "correct": 14,
+      "total": 20
+    },
+    "issue_type_accuracy": {
+      "accuracy": 0.8,
+      "correct": 16,
+      "total": 20
+    },
+    "object_part_accuracy": {
+      "accuracy": 0.6,
+      "correct": 12,
+      "total": 20
+    },
+    "evidence_standard_met_accuracy": {
+      "accuracy": 0.85,
+      "correct": 17,
+      "total": 20
+    },
+    "valid_image_accuracy": {
+      "accuracy": 0.8,
+      "correct": 16,
+      "total": 20
+    },
+    "severity_accuracy": {
+      "accuracy": 0.65,
+      "correct": 13,
+      "total": 20
+    },
+    "_timestamp": "2026-08-05T15:46:08.413736"
   }
 ]

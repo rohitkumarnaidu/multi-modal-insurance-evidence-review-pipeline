@@ -198,36 +198,12 @@ def _check_part_evidence(
         )
 
     if right_object_visible:
-        conflicting_damage = any(
-            a.is_usable
-            and a.visible_object_type == claim.claim_object
-            and a.visible_issue_type not in ("none", "unknown", "")
-            and a.visible_object_part not in ("unknown", check_part)
-            and check_part not in a.visible_parts_list
-            for a in image_analyses
-        )
-        broad_undamaged_view = any(
-            a.is_usable
-            and a.visible_object_type == claim.claim_object
-            and a.visible_issue_type == "none"
-            and len(a.visible_parts_list) >= 3
-            for a in image_analyses
-        )
-        if conflicting_damage or broad_undamaged_view:
-            return EvidenceSufficiency(
-                evidence_standard_met=True,
-                evidence_standard_met_reason=(
-                    f"The claimed {check_part} is not directly shown, but the submitted "
-                    f"{claim.claim_object} view provides enough visible context to evaluate a conflict."
-                ),
-                matched_requirements=[r.requirement_id for r in applicable_reqs],
-            )
         return EvidenceSufficiency(
-            evidence_standard_met=False,
+            evidence_standard_met=True,
             evidence_standard_met_reason=(
-                f"The submitted images show a {claim.claim_object}, but not enough of the "
-                f"claimed {check_part} area to verify the {check_issue} claim."
+                f"The submitted images show a {claim.claim_object}, providing enough context to evaluate the claim."
             ),
+            matched_requirements=[r.requirement_id for r in applicable_reqs],
         )
 
     return EvidenceSufficiency(

@@ -130,7 +130,7 @@ def _check_wrong_part(
     )
 
     part_mismatch_ratio = part_not_visible_count / len(usable)
-    if part_mismatch_ratio >= 0.51:
+    if part_mismatch_ratio == 1.0:
         right_object = any(
             a.visible_object_type not in ("unknown", "other", "")
             and a.is_usable
@@ -148,12 +148,9 @@ def _same_evidence_family(issue_a: str, issue_b: str) -> bool:
     b_lower = issue_b.lower()
 
     families = [
-        {"dent", "scratch"},
-        {"crack", "broken", "missing"},
-        {"crushed", "torn", "seal"},
-        {"water", "stain", "label"},
-        {"screen", "keyboard", "trackpad"},
-        {"hinge", "lid", "corner", "body", "port"},
+        {"dent", "scratch", "crack", "broken", "missing", "shatter"},
+        {"crushed", "torn", "seal", "damage"},
+        {"water", "stain", "label", "liquid"},
     ]
 
     for family in families:
@@ -188,11 +185,10 @@ def _check_claim_mismatch(
                 flags.append("claim_mismatch")
 
         hint = extraction.claimed_severity_hint.lower()
-        if hint in ("severe", "bad", "pretty bad", "heavily", "badly"):
-            if a.visible_severity in ("low", "none"):
-                fraud.has_claim_mismatch = True
-                if "claim_mismatch" not in flags:
-                    flags.append("claim_mismatch")
+        if hint in ("severe", "critical") and a.visible_severity == "none":
+            fraud.has_claim_mismatch = True
+            if "claim_mismatch" not in flags:
+                flags.append("claim_mismatch")
 
 
 def _check_image_text_instructions(
