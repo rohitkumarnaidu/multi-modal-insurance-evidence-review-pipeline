@@ -1,0 +1,56 @@
+site_name: Multi-Modal Evidence Review
+site_description: Enterprise automated AI pipeline for insurance damage verification.
+site_url: https://yourusername.github.io/hackerrank-orchestrate-june26/
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - Project Design: architecture/project_design.md
+      - System Overview: architecture/system.md
+      - Cloud Orchestration: architecture/cloud_orchestration.md
+  - Guides:
+      - Dashboard Guide: dashboard_guide.md
+      - API Reference: api_reference.md
+  - Development:
+      - Developer Guide: developer_guide.md

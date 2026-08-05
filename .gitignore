@@ -46,3 +46,12 @@ Thumbs.db
 code/evaluation/evaluation_report.md
 code/evaluation/eval_metrics.json
 code/metrics.json
+
+# ─── Frontend (Next.js/React) ────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+build/
+
+# ─── Documentation (MkDocs) ──────────────────────────────────────────────────
+site/
