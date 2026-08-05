@@ -1,0 +1,382 @@
+{
+  "user_001": {
+    "text": {
+      "claimed_object_part": "rear_bumper",
+      "claimed_issue_type": "dent",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "rear_bumper",
+      "visible_issue_type": "dent",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_002": {
+    "text": {
+      "claimed_object_part": "front_bumper",
+      "claimed_issue_type": "broken_part",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "unknown",
+      "visible_object_part": "front_bumper",
+      "visible_issue_type": "scratch",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_004": {
+    "text": {
+      "claimed_object_part": "windshield",
+      "claimed_issue_type": "crack",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "windshield",
+      "visible_issue_type": "crack",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_007": {
+    "text": {
+      "claimed_object_part": "side_mirror",
+      "claimed_issue_type": "broken_part",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "side_mirror",
+      "visible_issue_type": "broken_part",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_005": {
+    "text": {
+      "claimed_object_part": "rear_bumper",
+      "claimed_issue_type": "scratch",
+      "claimed_severity_hint": "low",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "rear_bumper",
+      "visible_issue_type": "dent",
+      "visible_severity": "low",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_006": {
+    "text": {
+      "claimed_object_part": "headlight",
+      "claimed_issue_type": "unknown",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "unknown",
+      "visible_issue_type": "none",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_003": {
+    "text": {
+      "claimed_object_part": "door",
+      "claimed_issue_type": "dent",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "door",
+      "visible_issue_type": "dent",
+      "visible_severity": "medium",
+      "is_blurry": true,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_008": {
+    "text": {
+      "claimed_object_part": "front_bumper",
+      "claimed_issue_type": "broken_part",
+      "claimed_severity_hint": "high",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "car",
+      "visible_object_part": "front_bumper",
+      "visible_issue_type": "scratch",
+      "visible_severity": "high",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": true,
+      "has_text_instruction": false
+    }
+  },
+  "user_009": {
+    "text": {
+      "claimed_object_part": "screen",
+      "claimed_issue_type": "crack",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "laptop",
+      "visible_object_part": "screen",
+      "visible_issue_type": "crack",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_010": {
+    "text": {
+      "claimed_object_part": "hinge",
+      "claimed_issue_type": "broken_part",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "laptop",
+      "visible_object_part": "hinge",
+      "visible_issue_type": "broken_part",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_011": {
+    "text": {
+      "claimed_object_part": "keyboard",
+      "claimed_issue_type": "stain",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "laptop",
+      "visible_object_part": "keyboard",
+      "visible_issue_type": "stain",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_012": {
+    "text": {
+      "claimed_object_part": "corner",
+      "claimed_issue_type": "dent",
+      "claimed_severity_hint": "low",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "laptop",
+      "visible_object_part": "corner",
+      "visible_issue_type": "dent",
+      "visible_severity": "low",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_018": {
+    "text": {
+      "claimed_object_part": "screen",
+      "claimed_issue_type": "crack",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "laptop",
+      "visible_object_part": "screen",
+      "visible_issue_type": "crack",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_020": {
+    "text": {
+      "claimed_object_part": "trackpad",
+      "claimed_issue_type": "none",
+      "claimed_severity_hint": "none",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "laptop",
+      "visible_object_part": "trackpad",
+      "visible_issue_type": "none",
+      "visible_severity": "none",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_015": {
+    "text": {
+      "claimed_object_part": "package_corner",
+      "claimed_issue_type": "crushed_packaging",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "package",
+      "visible_object_part": "package_corner",
+      "visible_issue_type": "crushed_packaging",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_030": {
+    "text": {
+      "claimed_object_part": "seal",
+      "claimed_issue_type": "torn_packaging",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "package",
+      "visible_object_part": "seal",
+      "visible_issue_type": "torn_packaging",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_031": {
+    "text": {
+      "claimed_object_part": "package_side",
+      "claimed_issue_type": "water_damage",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "package",
+      "visible_object_part": "package_side",
+      "visible_issue_type": "water_damage",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_032": {
+    "text": {
+      "claimed_object_part": "contents",
+      "claimed_issue_type": "unknown",
+      "claimed_severity_hint": "medium",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "package",
+      "visible_object_part": "contents",
+      "visible_issue_type": "none",
+      "visible_severity": "medium",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_033": {
+    "text": {
+      "claimed_object_part": "unknown",
+      "claimed_issue_type": "unknown",
+      "claimed_severity_hint": "low",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "unknown",
+      "visible_object_part": "unknown",
+      "visible_issue_type": "scratch",
+      "visible_severity": "low",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": false
+    }
+  },
+  "user_034": {
+    "text": {
+      "claimed_object_part": "seal",
+      "claimed_issue_type": "none",
+      "claimed_severity_hint": "none",
+      "is_multi_part": false,
+      "has_prompt_injection": false
+    },
+    "vision": {
+      "visible_object_type": "package",
+      "visible_object_part": "seal",
+      "visible_issue_type": "none",
+      "visible_severity": "none",
+      "is_blurry": false,
+      "is_low_light": false,
+      "has_watermark": false,
+      "has_text_instruction": true
+    }
+  }
+}

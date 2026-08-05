@@ -62,6 +62,17 @@ class MultiProviderClient:
         self.second_opinion_successes = 0
         self.only_provider = only_provider
 
+        # ── Provider 0: Mock (Demo Mode) ──────────────────────────────────
+        if only_provider == "mock":
+            from llm.mock_client import MockLLMClient
+            try:
+                mock_client = MockLLMClient()
+                self.providers.append(("mock", mock_client))
+                logger.info("[MultiProvider] Mock enabled")
+            except Exception as e:
+                logger.warning(f"[MultiProvider] Mock init failed: {e}")
+            return  # Stop here if mock is requested
+
         # ── Provider 1: NVIDIA (unlimited credits, 40 RPM — best first) ───
         if NVIDIA_API_KEY and (not only_provider or only_provider == "nvidia"):
             from llm.openai_compat_client import OpenAICompatClient

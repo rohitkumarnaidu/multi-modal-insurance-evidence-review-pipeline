@@ -592,5 +592,71 @@
       "total": 20
     },
     "_timestamp": "2026-08-05T15:46:08.413736"
+  },
+  {
+    "claim_status_accuracy": {
+      "accuracy": 0.8,
+      "correct": 16,
+      "total": 20
+    },
+    "issue_type_accuracy": {
+      "accuracy": 0.7,
+      "correct": 14,
+      "total": 20
+    },
+    "object_part_accuracy": {
+      "accuracy": 0.9,
+      "correct": 18,
+      "total": 20
+    },
+    "evidence_standard_met_accuracy": {
+      "accuracy": 0.85,
+      "correct": 17,
+      "total": 20
+    },
+    "valid_image_accuracy": {
+      "accuracy": 0.95,
+      "correct": 19,
+      "total": 20
+    },
+    "severity_accuracy": {
+      "accuracy": 0.85,
+      "correct": 17,
+      "total": 20
+    },
+    "_timestamp": "2026-08-05T18:00:38.713221"
+  },
+  {
+    "claim_status_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "issue_type_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "object_part_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "evidence_standard_met_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "valid_image_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "severity_accuracy": {
+      "accuracy": 1.0,
+      "correct": 20,
+      "total": 20
+    },
+    "_timestamp": "2026-08-05T18:12:00.570598"
   }
 ]
