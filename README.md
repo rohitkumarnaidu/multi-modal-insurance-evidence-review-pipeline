@@ -21,9 +21,9 @@ graph TD
     
     I --> J[[Final Claim Status & Output]]
     
-    classDef llm fill:#f9d0c4,stroke:#333,stroke-width:2px;
-    classDef rule fill:#d4e157,stroke:#333,stroke-width:2px;
-    classDef decision fill:#81c784,stroke:#333,stroke-width:2px;
+    classDef llm fill:#f9d0c4,stroke:#333,stroke-width:2px,color:#000;
+    classDef rule fill:#d4e157,stroke:#333,stroke-width:2px,color:#000;
+    classDef decision fill:#81c784,stroke:#333,stroke-width:2px,color:#000;
     
     class B,C llm;
     class D,E,F,G rule;
