@@ -1,9 +1,35 @@
 # Multi-Modal Evidence Review Pipeline
 
 ## Overview
-Automated insurance claim verification system that analyzes text conversations and image evidence using multi-modal LLMs to determine claim validity.
+An automated AI pipeline for insurance and customer support teams. It uses Vision-Language Models (VLMs), object detection (YOLOv8), and deterministic rule engines to verify damage claims for cars, laptops, and packages while automatically flagging fraudulent or mismatched images.
 
 ## Architecture
+
+```mermaid
+graph TD
+    A[User Claim & Images] --> B(E1: Text Extraction - LLM)
+    A --> C(E2: Vision Analysis - VLM x N images)
+    
+    B --> D{E3: Evidence Sufficiency}
+    C --> D
+    
+    D --> E(E4: Image Quality)
+    E --> F(E5: Fraud Detection)
+    F --> G(E6: User Risk History)
+    G --> H(E7: Decision Engine)
+    H --> I(E8: Explainability)
+    
+    I --> J[[Final Claim Status & Output]]
+    
+    classDef llm fill:#f9d0c4,stroke:#333,stroke-width:2px;
+    classDef rule fill:#d4e157,stroke:#333,stroke-width:2px;
+    classDef decision fill:#81c784,stroke:#333,stroke-width:2px;
+    
+    class B,C llm;
+    class D,E,F,G rule;
+    class H,I decision;
+```
+
 - **8 Deterministic Engines**: Claim extraction, Vision analysis, Evidence checking, Quality assessment, Fraud detection, Risk evaluation, Decision making, Explanation
 - **4 LLM Providers**: Gemini 2.5 Flash → Groq (Llama 4 Scout) → OpenRouter → NVIDIA (Llama 4 Maverick) with automatic fallback
 - **Per-key Rate Limiting**: Sliding-window RPM/RPD tracking with proactive key rotation
@@ -45,18 +71,6 @@ python compare_models.py --report-only  # Cross-model comparison
    - **E7 Decision Engine**: Final status determination (deterministic)
    - **E8 Explain Engine**: Consistency polish (deterministic)
 3. Write output CSV with 14 columns
-
-## Output
-- `dataset/output.csv` — Primary submission output
-- `dataset/output_*.csv` — Per-provider outputs
-- `dataset/model_comparison.csv` — Cross-model comparison
-- `dataset/output_consensus.csv` — Majority-vote consensus
-
-## Dependencies
-- `google-genai>=2.9.0` — Gemini API
-- `pydantic>=2.0.0` — Data validation
-- `openai>=1.0.0` — OpenAI-compatible clients (Groq, OpenRouter, NVIDIA)
-- `Pillow>=10.0.0` — Image compression for Groq
 
 ## Key Design Decisions
 - **Two-call design**: Each image analyzed independently (prevents cross-contamination)

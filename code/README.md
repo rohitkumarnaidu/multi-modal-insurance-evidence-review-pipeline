@@ -6,11 +6,21 @@ Production-grade multimodal damage claim verification platform for cars, laptops
 
 **10-Engine Pipeline with 2-Call LLM Design:**
 
-```
-Claim → [E1: Claim Extraction (LLM)] → [E2: Per-Image Vision (VLM×N)] →
-        [E3: Evidence Sufficiency] → [E4: Image Quality] →
-        [E5: Fraud Detection] → [E6: User Risk] →
-        [E7: Decision Engine] → [E8: Explainability] → Output
+```mermaid
+flowchart LR
+    Claim[Claim Text & Images] --> E1[E1: Claim Extraction LLM]
+    Claim --> E2[E2: Per-Image VLM x N]
+    
+    E1 --> E3[E3: Evidence Sufficiency]
+    E2 --> E3
+    
+    E3 --> E4[E4: Image Quality]
+    E4 --> E5[E5: Fraud Detection]
+    E5 --> E6[E6: User Risk]
+    E6 --> E7[E7: Decision Engine]
+    E7 --> E8[E8: Explainability]
+    
+    E8 --> Out((Output CSV))
 ```
 
 - **Call 1** (text-only): Extracts claimed damage from conversation transcript
@@ -21,7 +31,7 @@ Claim → [E1: Claim Extraction (LLM)] → [E2: Per-Image Vision (VLM×N)] →
 
 ### Prerequisites
 - Python 3.11+
-- Gemini API key
+- Gemini API key (or Groq, OpenRouter, NVIDIA)
 
 ### Install
 
@@ -41,30 +51,19 @@ $env:GEMINI_API_KEY="your-key-here"
 
 ## Run
 
-### Process Test Claims (→ output.csv)
+### Process Test Claims
 ```bash
 python main.py
 ```
 
-### Process Sample Claims (→ sample_output.csv)
+### Process Sample Claims
 ```bash
 python main.py --mode sample
 ```
 
-### Run Evaluation (sample claims → metrics + report)
-```bash
-python evaluation/main.py
-```
-
-### Force Fresh Evaluation
+### Force Fresh Evaluation (Skip Cache)
 ```bash
 python evaluation/main.py --fresh
-```
-
-### Inspect Sample Errors and Validate Test Output
-```bash
-python evaluation/error_analysis.py
-python check_output.py
 ```
 
 ## Key Design Decisions
@@ -119,13 +118,3 @@ code/
     ├── metrics.py             # Scoring functions
     └── evaluation_report.md   # Generated report
 ```
-
-## Cost & Performance
-
-| Metric | Estimate |
-|--------|----------|
-| API calls (test set) | ~135 (1 LLM + ~2 VLM per claim) |
-| Images processed | ~85 |
-| Total tokens | ~140K input, ~45K output |
-| Estimated cost | ~$0.05 (Gemini Flash pricing) |
-| Runtime | ~3-5 minutes |

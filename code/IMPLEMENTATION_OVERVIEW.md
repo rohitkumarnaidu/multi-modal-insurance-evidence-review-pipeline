@@ -1,4 +1,4 @@
-# Implementation Overview — 100% Honest, Nothing Hidden
+# System Architecture & Implementation
 
 ## TL;DR
 
@@ -8,39 +8,39 @@
 
 ## Architecture — What Actually Happens Per Claim
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  main.py (Orchestrator) — sequential or parallel loop over claims  │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  1. data_loader.load_claims()        → reads claims.csv             │
-│  2. data_loader.load_user_history()  → reads user_history.csv       │
-│  3. data_loader.load_evidence_requirements()                        │
-│                                                                     │
-│  FOR EACH CLAIM:                                                    │
-│  ┌────────────────────────────────────────────────────────────────┐ │
-│  │ ★ API CALL 1: claim_engine.extract_claim_with_llm()           │ │
-│  │   → Sends conversation TEXT ONLY to LLM (any provider)        │ │
-│  │   → Gets back: claimed_part, claimed_issue, injection flag    │ │
-│  │   → Also runs regex pre-scan for prompt injection patterns    │ │
-│  ├────────────────────────────────────────────────────────────────┤ │
-│  │ ★ API CALL 2..N: vision_engine.analyze_single_image()         │ │
-│  │   → Sends EACH image INDIVIDUALLY to VLM (any provider)       │ │
-│  │   → Gets back: visible_part, visible_issue, quality flags,    │ │
-│  │     watermark, text_instruction, vehicle_color, confidence    │ │
-│  ├────────────────────────────────────────────────────────────────┤ │
-│  │ DETERMINISTIC (no API calls):                                 │ │
-│  │   E3: evidence_engine  → is evidence sufficient?              │ │
-│  │   E4: quality_engine   → valid_image flag                     │ │
-│  │   E5: fraud_engine     → 8 fraud signal checks                │ │
-│  │   E6: risk_engine      → user history flag propagation        │ │
-│  │   E7: decision_engine  → final claim_status + all fields      │ │
-│  │   E8: explain_engine   → consistency polish                   │ │
-│  │   C1: calibration      → issue_type + severity overrides      │ │
-│  └────────────────────────────────────────────────────────────────┘ │
-│                                                                     │
-│  write_output_csv() → dataset/output.csv                            │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    participant M as main.py (Orchestrator)
+    participant D as data_loader
+    participant L as LLM Engine
+    participant V as VLM Engine
+    participant R as Rule Engines (E3-E8)
+    
+    M->>D: load_claims()
+    M->>D: load_user_history()
+    M->>D: load_evidence_requirements()
+    
+    loop FOR EACH CLAIM
+        M->>L: E1: extract_claim_with_llm()
+        Note over L: Sends conversation TEXT ONLY
+        L-->>M: claimed_part, claimed_issue, injection flag
+        
+        loop FOR EACH IMAGE
+            M->>V: E2: analyze_single_image()
+            V-->>M: visible_part, visible_issue, quality, etc.
+        end
+        
+        Note over R: DETERMINISTIC (no API calls)
+        M->>R: E3: evidence_engine (is evidence sufficient?)
+        M->>R: E4: quality_engine (valid_image flag)
+        M->>R: E5: fraud_engine (8 fraud signal checks)
+        M->>R: E6: risk_engine (user history flag propagation)
+        M->>R: E7: decision_engine (final claim_status)
+        M->>R: E8: explain_engine (consistency polish)
+        M->>R: C1: calibration (issue_type/severity overrides)
+    end
+    
+    M->>D: write_output_csv()
 ```
 
 ---
@@ -49,25 +49,33 @@
 
 The system uses 4 LLM providers in a priority fallback chain. If one provider fails all retries, the next is tried automatically.
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│  MultiProviderClient (multi_provider_client.py)                         │
-│                                                                          │
-│  Request ──► GEMINI (6 keys, 5 RPM/key, 20 RPD/key)                    │
-│              │ gemini-2.5-flash                                          │
-│              │ auto key rotation on 429                                  │
-│              ▼ All keys exhausted?                                       │
-│         ──► GROQ (25 RPM, 14,400 RPD)                                   │
-│              │ llama-4-maverick-17b-128e-instruct                        │
-│              ▼ Failed?                                                   │
-│         ──► OPENROUTER (20 RPM, free tier)                               │
-│              │ google/gemini-2.5-flash (same model, different quota)     │
-│              ▼ Failed?                                                   │
-│         ──► NVIDIA (40 RPM, ∞ unlimited credits)                         │
-│              │ meta/llama-4-maverick-17b-128e-instruct                   │
-│              ▼ Failed?                                                   │
-│         ──► Return None (graceful fallback)                              │
-└──────────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Request[Request] --> Multi[MultiProviderClient]
+    
+    Multi --> Gemini{GEMINI<br>gemini-2.5-flash<br>5 RPM / 20 RPD per key}
+    Gemini -- Success --> Result((Return))
+    Gemini -- "All 6 keys exhausted or fail" --> Groq
+    
+    Groq{GROQ<br>llama-4-maverick<br>25 RPM / 14,400 RPD}
+    Groq -- Success --> Result
+    Groq -- Fail --> OpenRouter
+    
+    OpenRouter{OPENROUTER<br>gemini-2.5-flash<br>20 RPM}
+    OpenRouter -- Success --> Result
+    OpenRouter -- Fail --> NVIDIA
+    
+    NVIDIA{NVIDIA<br>llama-4-maverick<br>40 RPM / Unlimited}
+    NVIDIA -- Success --> Result
+    NVIDIA -- Fail --> Fallback((Return None<br>Graceful Degradation))
+    
+    classDef main fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+    classDef success fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
+    classDef fail fill:#ffcdd2,stroke:#c62828,stroke-width:2px;
+    
+    class Multi main;
+    class Result success;
+    class Fallback fail;
 ```
 
 ### Provider Configuration
