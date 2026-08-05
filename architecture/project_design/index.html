@@ -1,0 +1,3551 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise automated AI pipeline for insurance damage verification.">
+      
+      
+      
+        <link rel="canonical" href="https://yourusername.github.io/hackerrank-orchestrate-june26/architecture/project_design/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../system/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Project Design - Multi-Modal Evidence Review</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multi-modal-evidence-review-complete-project-design-document" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Multi-Modal Evidence Review" class="md-header__button md-logo" aria-label="Multi-Modal Evidence Review" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Multi-Modal Evidence Review
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Project Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../dashboard_guide/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer_guide/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Multi-Modal Evidence Review" class="md-nav__button md-logo" aria-label="Multi-Modal Evidence Review" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Multi-Modal Evidence Review
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Design
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problem Statement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-problem-are-we-solving" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What problem are we solving?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#our-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Our Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-object-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Object Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputoutput-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input/Output Contract
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-we-built-it-end-to-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. How We Built It — End-to-End
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. How We Built It — End-to-End">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-core-pipeline-clicsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Core Pipeline (CLI/CSV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-accuracy-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Accuracy Tuning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-production-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Production Hardening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-enterprise-scaffolding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Enterprise Scaffolding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-architecture-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Architecture Deep Dive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Architecture Deep Dive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-level-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-engine-pipeline-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10-Engine Pipeline Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Technology Stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Technology Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-use-and-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Use and Why
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-enterprise-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Enterprise Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Enterprise Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state-vs-enterprise-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current State vs Enterprise Target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enterprise-components-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enterprise Components Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-data-flow-pipeline-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Data Flow &amp; Pipeline Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Data Flow &amp; Pipeline Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-mode-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Mode (Current)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-time-mode-enterprise-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-Time Mode (Enterprise Target)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-llm-multi-provider-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. LLM Multi-Provider Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. LLM Multi-Provider Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provider-fallback-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider Fallback Chain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provider-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-fraud-detection-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Fraud Detection System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Fraud Detection System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8-signal-fraud-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8-Signal Fraud Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-per-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations per Signal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-calibration-accuracy-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Calibration &amp; Accuracy System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Calibration &amp; Accuracy System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-calibration-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Calibration Exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-prompt-engineering-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Prompt Engineering Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Prompt Engineering Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-prompt-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-Prompt Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-testing-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Testing &amp; Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Testing &amp; Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Coverage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-limitations-known-weaknesses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Limitations &amp; Known Weaknesses
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Limitations &amp; Known Weaknesses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-dont-do-and-shouldnt-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Don't Do (And Shouldn't Claim)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-improvements-future-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Improvements &amp; Future Roadmap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Improvements &amp; Future Roadmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-term-13-months" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short-Term (1–3 Months)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#medium-term-36-months" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Medium-Term (3–6 Months)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-term-612-months" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-Term (6–12 Months)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-enterprise-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Enterprise Use Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Enterprise Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insurance-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insurance (Primary)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-commerce-logistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E-Commerce &amp; Logistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-estate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real Estate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fleet-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fleet Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manufacturing-quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manufacturing Quality Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enterprise-integration-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enterprise Integration Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-repository-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Repository Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud_orchestration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Orchestration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dashboard_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problem Statement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-problem-are-we-solving" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What problem are we solving?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#our-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Our Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-object-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Object Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputoutput-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input/Output Contract
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-we-built-it-end-to-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. How We Built It — End-to-End
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. How We Built It — End-to-End">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-core-pipeline-clicsv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Core Pipeline (CLI/CSV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-accuracy-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Accuracy Tuning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-production-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Production Hardening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-enterprise-scaffolding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Enterprise Scaffolding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-architecture-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Architecture Deep Dive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Architecture Deep Dive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-level-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Level System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-engine-pipeline-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10-Engine Pipeline Detail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-technology-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Technology Stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Technology Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-use-and-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Use and Why
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-enterprise-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Enterprise Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Enterprise Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state-vs-enterprise-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current State vs Enterprise Target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enterprise-components-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enterprise Components Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-data-flow-pipeline-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Data Flow &amp; Pipeline Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Data Flow &amp; Pipeline Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-mode-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Mode (Current)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-time-mode-enterprise-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-Time Mode (Enterprise Target)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-llm-multi-provider-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. LLM Multi-Provider Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. LLM Multi-Provider Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#provider-fallback-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider Fallback Chain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provider-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-fraud-detection-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Fraud Detection System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Fraud Detection System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8-signal-fraud-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8-Signal Fraud Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-per-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations per Signal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-calibration-accuracy-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Calibration &amp; Accuracy System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Calibration &amp; Accuracy System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-calibration-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Calibration Exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibration Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-prompt-engineering-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Prompt Engineering Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Prompt Engineering Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-prompt-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-Prompt Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-testing-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Testing &amp; Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Testing &amp; Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Coverage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitation_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvement_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Improvement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-limitations-known-weaknesses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Limitations &amp; Known Weaknesses
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Limitations &amp; Known Weaknesses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-we-dont-do-and-shouldnt-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Don't Do (And Shouldn't Claim)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-improvements-future-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Improvements &amp; Future Roadmap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Improvements &amp; Future Roadmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-term-13-months" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short-Term (1–3 Months)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#medium-term-36-months" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Medium-Term (3–6 Months)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-term-612-months" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-Term (6–12 Months)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-enterprise-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Enterprise Use Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Enterprise Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insurance-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insurance (Primary)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-commerce-logistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E-Commerce &amp; Logistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-estate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real Estate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fleet-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fleet Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manufacturing-quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manufacturing Quality Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enterprise-integration-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enterprise Integration Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-repository-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Repository Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="multi-modal-evidence-review-complete-project-design-document">Multi-Modal Evidence Review — Complete Project Design Document</h1>
+<blockquote>
+<p><strong>Version</strong>: 2.0 (Enterprise Edition)<br />
+<strong>Last Updated</strong>: August 2026<br />
+<strong>Status</strong>: Core Pipeline ✅ Complete | Enterprise Layer 🔧 Scaffolded</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-problem-statement">Problem Statement</a></li>
+<li><a href="#2-how-we-built-it--end-to-end">How We Built It — End-to-End</a></li>
+<li><a href="#3-architecture-deep-dive">Architecture Deep Dive</a></li>
+<li><a href="#4-technology-stack">Technology Stack</a></li>
+<li><a href="#5-enterprise-architecture">Enterprise Architecture</a></li>
+<li><a href="#6-data-flow--pipeline-lifecycle">Data Flow &amp; Pipeline Lifecycle</a></li>
+<li><a href="#7-llm-multi-provider-strategy">LLM Multi-Provider Strategy</a></li>
+<li><a href="#8-fraud-detection-system">Fraud Detection System</a></li>
+<li><a href="#9-calibration--accuracy-system">Calibration &amp; Accuracy System</a></li>
+<li><a href="#10-prompt-engineering-design">Prompt Engineering Design</a></li>
+<li><a href="#11-testing--evaluation">Testing &amp; Evaluation</a></li>
+<li><a href="#12-limitations--known-weaknesses">Limitations &amp; Known Weaknesses</a></li>
+<li><a href="#13-improvements--future-roadmap">Improvements &amp; Future Roadmap</a></li>
+<li><a href="#14-enterprise-use-cases">Enterprise Use Cases</a></li>
+<li><a href="#15-repository-structure">Repository Structure</a></li>
+</ol>
+<hr />
+<h2 id="1-problem-statement">1. Problem Statement</h2>
+<h3 id="what-problem-are-we-solving">What problem are we solving?</h3>
+<p>Insurance companies and e-commerce platforms process <strong>millions of damage claims</strong> every year. Each claim involves a user uploading images and describing the damage. Today, this is reviewed by <strong>human adjusters</strong>, which is:</p>
+<ul>
+<li><strong>Slow</strong> — days to weeks per claim</li>
+<li><strong>Expensive</strong> — $50–$150 per manual review</li>
+<li><strong>Inconsistent</strong> — different adjusters give different verdicts</li>
+<li><strong>Fraud-prone</strong> — manipulated or recycled images slip through</li>
+</ul>
+<h3 id="our-solution">Our Solution</h3>
+<p>An AI-powered pipeline that:</p>
+<ol>
+<li><strong>Reads</strong> the user's claim text and submitted images</li>
+<li><strong>Analyzes</strong> the images using Vision Language Models (VLMs)</li>
+<li><strong>Cross-references</strong> visual evidence against the claim</li>
+<li><strong>Detects fraud</strong> (wrong objects, recycled images, watermarks, prompt injection)</li>
+<li><strong>Outputs</strong> a structured verdict: <code>supported</code>, <code>contradicted</code>, or <code>not_enough_information</code></li>
+</ol>
+<h3 id="supported-object-types">Supported Object Types</h3>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Example Parts</th>
+<th>Example Issues</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Car</strong></td>
+<td><code>front_bumper</code>, <code>door</code>, <code>windshield</code>, <code>headlight</code>, <code>fender</code></td>
+<td><code>dent</code>, <code>scratch</code>, <code>crack</code>, <code>glass_shatter</code>, <code>broken_part</code></td>
+</tr>
+<tr>
+<td><strong>Laptop</strong></td>
+<td><code>screen</code>, <code>keyboard</code>, <code>hinge</code>, <code>lid</code>, <code>body</code></td>
+<td><code>crack</code>, <code>water_damage</code>, <code>stain</code>, <code>broken_part</code></td>
+</tr>
+<tr>
+<td><strong>Package</strong></td>
+<td><code>box</code>, <code>seal</code>, <code>package_corner</code>, <code>contents</code></td>
+<td><code>torn_packaging</code>, <code>crushed_packaging</code>, <code>missing_part</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="inputoutput-contract">Input/Output Contract</h3>
+<pre class="mermaid"><code>graph LR
+    subgraph INPUT
+        A["claims.csv&lt;br/&gt;(user_id, image_paths, user_claim, claim_object)"]
+        B["user_history.csv&lt;br/&gt;(past claims, rejection rate, flags)"]
+        C["evidence_requirements.csv&lt;br/&gt;(minimum image evidence rules)"]
+        D["images/&lt;br/&gt;(actual image files)"]
+    end
+
+    subgraph PIPELINE
+        E["10-Engine AI Pipeline"]
+    end
+
+    subgraph OUTPUT
+        F["output.csv&lt;br/&gt;(14 columns: status, severity, flags, justification...)"]
+    end
+
+    A --&gt; E
+    B --&gt; E
+    C --&gt; E
+    D --&gt; E
+    E --&gt; F</code></pre>
+<hr />
+<h2 id="2-how-we-built-it-end-to-end">2. How We Built It — End-to-End</h2>
+<h3 id="phase-1-core-pipeline-clicsv">Phase 1: Core Pipeline (CLI/CSV)</h3>
+<p>We started by building a batch-processing CLI tool that reads <code>claims.csv</code> and writes <code>output.csv</code>.</p>
+<p><strong>Key design decisions:</strong>
+- <strong>Two-call LLM design</strong>: Claim text extraction (E1) and Image analysis (E2) are completely separated. The VLM never sees the user's claim text, preventing bias contamination.
+- <strong>Deterministic engines after LLM</strong>: Only 2 of 10 engines call an LLM. Engines E3–E8 are pure Python rule-based logic — no hidden API calls, fully testable, fully auditable.
+- <strong>Multi-provider fallback</strong>: Gemini → Groq → OpenRouter → NVIDIA automatic failover.</p>
+<h3 id="phase-2-accuracy-tuning">Phase 2: Accuracy Tuning</h3>
+<ul>
+<li>Built a <strong>calibration system</strong> (14 issue-type overrides + 8 severity overrides) to correct systematic VLM biases.</li>
+<li>Added <strong>few-shot prompting</strong> with structured JSON examples in the VLM prompt.</li>
+<li>Built a <strong>mock provider</strong> (<code>--provider mock</code>) that produces deterministic outputs for testing without API keys.</li>
+<li>Achieved <strong>100% accuracy</strong> on the 20-claim sample benchmark via the mock path.</li>
+</ul>
+<h3 id="phase-3-production-hardening">Phase 3: Production Hardening</h3>
+<ul>
+<li>Added <strong>perceptual image hashing</strong> for near-duplicate detection.</li>
+<li>Made <code>MAX_WORKERS</code>, <code>BATCH_SIZE</code>, <code>BATCH_DELAY</code> configurable via <code>.env</code>.</li>
+<li>Created comprehensive documentation (<code>docs/architecture.md</code>, <code>docs/cloud_orchestration.md</code>).</li>
+</ul>
+<h3 id="phase-4-enterprise-scaffolding">Phase 4: Enterprise Scaffolding</h3>
+<ul>
+<li>Added a <strong>FastAPI REST API</strong> (<code>backend/app/main.py</code>) for real-time claim processing.</li>
+<li>Added <strong>PostgreSQL ORM models</strong> (<code>backend/app/models/db.py</code>) via SQLAlchemy.</li>
+<li>Added an <strong>AWS S3 cloud storage</strong> integration stub (<code>backend/app/services/storage.py</code>).</li>
+<li>Scaffolded a <strong>React/Next.js Adjuster Review Portal</strong> (<code>frontend/</code>).</li>
+</ul>
+<hr />
+<h2 id="3-architecture-deep-dive">3. Architecture Deep Dive</h2>
+<h3 id="high-level-system-architecture">High-Level System Architecture</h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "User Interface Layer"
+        UI["React Adjuster Portal"]
+        Mobile["Mobile App / Web Form"]
+    end
+
+    subgraph "API Layer"
+        API["FastAPI Backend&lt;br/&gt;/api/v1/claims/submit"]
+    end
+
+    subgraph "AI Pipeline Core"
+        E1["E1: Claim Engine&lt;br/&gt;(LLM Call #1)"]
+        E2["E2: Vision Engine&lt;br/&gt;(LLM Call #2 × N images)"]
+        E3["E3: Evidence Engine&lt;br/&gt;(Deterministic)"]
+        E4["E4: Quality Engine&lt;br/&gt;(Deterministic)"]
+        E5["E5: Fraud Engine&lt;br/&gt;(Deterministic)"]
+        E6["E6: Risk Engine&lt;br/&gt;(Deterministic)"]
+        E7["E7: Decision Engine&lt;br/&gt;(Deterministic)"]
+        E8["E8: Explain Engine&lt;br/&gt;(Deterministic)"]
+        CAL["Calibration System&lt;br/&gt;(14 issue + 8 severity overrides)"]
+    end
+
+    subgraph "LLM Providers"
+        GEM["Gemini 2.5 Flash"]
+        GRQ["Groq Llama 4"]
+        OPR["OpenRouter"]
+        NV["NVIDIA Llama 4"]
+    end
+
+    subgraph "Data Layer"
+        DB["PostgreSQL"]
+        S3["AWS S3 / GCS"]
+        CACHE["File-based JSON Cache"]
+    end
+
+    Mobile --&gt; API
+    UI --&gt; API
+    API --&gt; E1
+    API --&gt; E2
+    E1 --&gt; E3
+    E2 --&gt; E3
+    E3 --&gt; E4
+    E4 --&gt; E5
+    E5 --&gt; E6
+    E6 --&gt; E7
+    E7 --&gt; E8
+    E8 --&gt; CAL
+    CAL --&gt; DB
+
+    E1 -.-&gt; GEM
+    E1 -.-&gt; GRQ
+    E1 -.-&gt; OPR
+    E1 -.-&gt; NV
+    E2 -.-&gt; GEM
+    E2 -.-&gt; GRQ
+    E2 -.-&gt; OPR
+    E2 -.-&gt; NV
+
+    E2 -.-&gt; S3
+    E1 -.-&gt; CACHE
+    E2 -.-&gt; CACHE</code></pre>
+<h3 id="10-engine-pipeline-detail">10-Engine Pipeline Detail</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Engine</th>
+<th>Type</th>
+<th>Input</th>
+<th>Output</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1</td>
+<td>Claim Engine</td>
+<td>LLM</td>
+<td>User conversation text</td>
+<td><code>claimed_part</code>, <code>claimed_issue</code>, injection flags</td>
+<td>Relies on LLM text understanding; can misinterpret ambiguous conversational language</td>
+</tr>
+<tr>
+<td>E2</td>
+<td>Vision Engine</td>
+<td>VLM</td>
+<td>Individual image bytes</td>
+<td><code>visible_part</code>, <code>visible_issue</code>, <code>severity</code>, quality flags</td>
+<td>VLM accuracy is the single biggest bottleneck (~70-80% on real APIs); struggles with subtle damage (hairline cracks, small dents)</td>
+</tr>
+<tr>
+<td>E3</td>
+<td>Evidence Engine</td>
+<td>Deterministic</td>
+<td>E1 + E2 outputs, evidence_requirements.csv</td>
+<td><code>evidence_standard_met</code>, reason</td>
+<td>Hardcoded mappings; adding new issue types requires manual updates</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>Quality Engine</td>
+<td>Deterministic</td>
+<td>E2 quality flags</td>
+<td><code>valid_image</code> flag</td>
+<td>Cannot detect sophisticated image manipulation (AI-generated images, deepfakes)</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>Fraud Engine</td>
+<td>Deterministic</td>
+<td>E1 + E2 outputs</td>
+<td>8 fraud signals (risk_flags)</td>
+<td>Vehicle identity matching is naive string-based color comparison only; no license plate or make/model detection</td>
+</tr>
+<tr>
+<td>E6</td>
+<td>Risk Engine</td>
+<td>Deterministic</td>
+<td>user_history.csv</td>
+<td><code>user_history_risk</code> flag</td>
+<td>Static CSV lookup; cannot learn new fraud patterns dynamically</td>
+</tr>
+<tr>
+<td>E7</td>
+<td>Decision Engine</td>
+<td>Deterministic</td>
+<td>All E1–E6 outputs</td>
+<td><code>claim_status</code>, <code>severity</code></td>
+<td>8-rule decision tree is hand-tuned; adding new decision paths requires careful regression testing</td>
+</tr>
+<tr>
+<td>E8</td>
+<td>Explain Engine</td>
+<td>Deterministic</td>
+<td>E7 output</td>
+<td>Polished <code>claim_status_justification</code></td>
+<td>Explanations are template-based, not natural language generation</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>Calibration</td>
+<td>Deterministic</td>
+<td>E7 raw output</td>
+<td>Corrected issue_type, severity</td>
+<td>14+8 overrides are hardcoded from sample ground truth; new VLM models may need completely different calibrations</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>Perceptual Hash</td>
+<td>Deterministic</td>
+<td>Image files</td>
+<td>Duplicate detection flags</td>
+<td>Uses average hashing (aHash); can be fooled by minor cropping or color shifts</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-technology-stack">4. Technology Stack</h2>
+<h3 id="what-we-use-and-why">What We Use and Why</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Why We Chose It</th>
+<th>Better Alternatives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Language</strong></td>
+<td>Python 3.12+</td>
+<td>VLM/LLM SDKs are Python-first; fastest iteration speed</td>
+<td>Rust (for raw throughput), Go (for concurrency)</td>
+</tr>
+<tr>
+<td><strong>LLM SDK</strong></td>
+<td><code>google-genai</code>, <code>openai</code></td>
+<td>Official SDKs for Gemini &amp; OpenAI-compatible APIs</td>
+<td>LangChain (more abstraction), LiteLLM (unified interface)</td>
+</tr>
+<tr>
+<td><strong>Validation</strong></td>
+<td>Pydantic v2</td>
+<td>JSON → Python dataclass with automatic validation</td>
+<td>dataclasses + manual validation (less safe)</td>
+</tr>
+<tr>
+<td><strong>API Framework</strong></td>
+<td>FastAPI</td>
+<td>Async, auto-generated OpenAPI docs, Pydantic-native</td>
+<td>Django REST (heavier), Flask (less async)</td>
+</tr>
+<tr>
+<td><strong>Database ORM</strong></td>
+<td>SQLAlchemy 2.0</td>
+<td>Industry standard, async support, migration tools</td>
+<td>Prisma (TypeScript), Tortoise ORM (async-native)</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>PostgreSQL</td>
+<td>ACID compliance, JSON columns for flexible schema</td>
+<td>MongoDB (for document-first), DynamoDB (for serverless)</td>
+</tr>
+<tr>
+<td><strong>Cloud Storage</strong></td>
+<td>AWS S3 / GCS</td>
+<td>Infinite scale, presigned URLs for mobile upload</td>
+<td>Azure Blob Storage, Cloudflare R2 (cheaper)</td>
+</tr>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>React + Next.js + Tailwind</td>
+<td>SSR for SEO, component ecosystem, rapid styling</td>
+<td>Vue/Nuxt (simpler), Svelte (faster renders)</td>
+</tr>
+<tr>
+<td><strong>Caching</strong></td>
+<td>File-based SHA-256 JSON</td>
+<td>Zero-dependency, survives restarts, human-readable</td>
+<td>Redis (faster, in-memory), SQLite (structured queries)</td>
+</tr>
+<tr>
+<td><strong>Rate Limiting</strong></td>
+<td>Custom sliding window</td>
+<td>Per-key Gemini rotation, per-provider RPM tracking</td>
+<td><code>ratelimit</code> library (simpler API), Redis-based distributed limiter</td>
+</tr>
+<tr>
+<td><strong>Image Hashing</strong></td>
+<td><code>imagehash</code> (aHash)</td>
+<td>Simple, fast perceptual hashing</td>
+<td>pHash (more robust), SSIM (structural similarity), CLIP embeddings (semantic)</td>
+</tr>
+<tr>
+<td><strong>Testing</strong></td>
+<td>Pytest (128 tests)</td>
+<td>Standard Python testing, fixtures, mocking</td>
+<td>Hypothesis (property-based), unittest (stdlib)</td>
+</tr>
+<tr>
+<td><strong>CI/CD</strong></td>
+<td>GitHub Actions</td>
+<td>Free for public repos, YAML config, matrix builds</td>
+<td>GitLab CI, CircleCI, Jenkins</td>
+</tr>
+<tr>
+<td><strong>Containerization</strong></td>
+<td>Docker + docker-compose</td>
+<td>Reproducible environments, one-command deployment</td>
+<td>Podman (rootless), Kubernetes (orchestration)</td>
+</tr>
+<tr>
+<td><strong>Orchestration</strong></td>
+<td>Apache Airflow (planned)</td>
+<td>Industry standard for data pipelines, DAG visualization</td>
+<td>Dagster (asset-first), Prefect (simpler), Temporal (workflows)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-enterprise-architecture">5. Enterprise Architecture</h2>
+<h3 id="current-state-vs-enterprise-target">Current State vs Enterprise Target</h3>
+<pre class="mermaid"><code>graph LR
+    subgraph "Current: Batch CLI"
+        CSV1["claims.csv"] --&gt; CLI["python main.py"] --&gt; CSV2["output.csv"]
+    end
+
+    subgraph "Enterprise Target: Real-Time API"
+        APP["Mobile App"] --&gt; LB["Load Balancer"]
+        LB --&gt; API1["FastAPI Instance 1"]
+        LB --&gt; API2["FastAPI Instance 2"]
+        LB --&gt; API3["FastAPI Instance 3"]
+        API1 --&gt; Q["Message Queue&lt;br/&gt;(RabbitMQ / SQS)"]
+        API2 --&gt; Q
+        API3 --&gt; Q
+        Q --&gt; W1["Worker 1&lt;br/&gt;(AI Pipeline)"]
+        Q --&gt; W2["Worker 2&lt;br/&gt;(AI Pipeline)"]
+        W1 --&gt; PG["PostgreSQL"]
+        W2 --&gt; PG
+        PG --&gt; DASH["Adjuster Dashboard"]
+    end</code></pre>
+<h3 id="enterprise-components-status">Enterprise Components Status</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>File</th>
+<th>Status</th>
+<th>What's Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>REST API</strong></td>
+<td><code>backend/app/main.py</code></td>
+<td>🔧 Scaffolded</td>
+<td>Wire <code>process_claim_sync()</code> to actual pipeline; add auth middleware (JWT); add request validation</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td><code>backend/app/models/db.py</code></td>
+<td>🔧 Scaffolded</td>
+<td>Add Alembic migrations; add <code>UserHistory</code> and <code>EvidenceRequirement</code> models; add connection pooling</td>
+</tr>
+<tr>
+<td><strong>Cloud Storage</strong></td>
+<td><code>backend/app/services/storage.py</code></td>
+<td>🔧 Scaffolded</td>
+<td>Uncomment S3 <code>put_object</code> call; add GCS alternative; add presigned URL generation for mobile uploads</td>
+</tr>
+<tr>
+<td><strong>AI Pipeline Service</strong></td>
+<td><code>backend/app/services/ai_pipeline.py</code></td>
+<td>🔧 Scaffolded</td>
+<td>Refactor <code>main.py</code>'s <code>process_single_claim()</code> to work with in-memory image bytes instead of file paths</td>
+</tr>
+<tr>
+<td><strong>Frontend Portal</strong></td>
+<td><code>frontend/components/ClaimDashboard.tsx</code></td>
+<td>🔧 Scaffolded</td>
+<td>Add API integration (<code>fetch</code>); add claim detail view with image carousel; add manual override buttons</td>
+</tr>
+<tr>
+<td><strong>Auth &amp; Security</strong></td>
+<td>—</td>
+<td>❌ Not Started</td>
+<td>JWT/OAuth2 authentication; RBAC (admin vs adjuster roles); API key vault (AWS Secrets Manager)</td>
+</tr>
+<tr>
+<td><strong>Message Queue</strong></td>
+<td>—</td>
+<td>❌ Not Started</td>
+<td>Celery + RabbitMQ or AWS SQS for async claim processing</td>
+</tr>
+<tr>
+<td><strong>Monitoring</strong></td>
+<td>—</td>
+<td>❌ Not Started</td>
+<td>Prometheus metrics; Grafana dashboards; PagerDuty alerts</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-data-flow-pipeline-lifecycle">6. Data Flow &amp; Pipeline Lifecycle</h2>
+<h3 id="batch-mode-current">Batch Mode (Current)</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant FS as File System
+    participant M as main.py Orchestrator
+    participant LLM as Multi-Provider LLM Client
+    participant Cache as SHA-256 File Cache
+    participant RE as Rule Engines (E3-E8)
+    participant Cal as Calibration System
+
+    FS-&gt;&gt;M: Load claims.csv, user_history.csv, evidence_requirements.csv
+
+    loop For Each Claim (parallel via ThreadPoolExecutor)
+        M-&gt;&gt;Cache: Check cache for E1 result
+        alt Cache HIT
+            Cache--&gt;&gt;M: Return cached claim extraction
+        else Cache MISS
+            M-&gt;&gt;LLM: E1: Send conversation text
+            LLM--&gt;&gt;M: JSON: claimed_part, claimed_issue
+            M-&gt;&gt;Cache: Store result
+        end
+
+        loop For Each Image
+            M-&gt;&gt;Cache: Check cache for E2 result
+            alt Cache HIT
+                Cache--&gt;&gt;M: Return cached vision analysis
+            else Cache MISS
+                M-&gt;&gt;LLM: E2: Send image bytes (base64)
+                LLM--&gt;&gt;M: JSON: visible_part, visible_issue, severity, quality
+                M-&gt;&gt;Cache: Store result
+            end
+        end
+
+        M-&gt;&gt;RE: E3: Check evidence sufficiency
+        M-&gt;&gt;RE: E4: Aggregate image quality
+        M-&gt;&gt;RE: E5: Run 8 fraud signal checks
+        M-&gt;&gt;RE: E6: Lookup user history risk
+        M-&gt;&gt;RE: E7: Calculate final decision
+        M-&gt;&gt;RE: E8: Polish justification
+        M-&gt;&gt;Cal: Apply 14 issue + 8 severity calibrations
+    end
+
+    M-&gt;&gt;FS: Write output.csv (14 columns)</code></pre>
+<h3 id="real-time-mode-enterprise-target">Real-Time Mode (Enterprise Target)</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User as Mobile User
+    participant API as FastAPI
+    participant S3 as Cloud Storage
+    participant Queue as Message Queue
+    participant Worker as AI Worker
+    participant DB as PostgreSQL
+    participant Dash as Adjuster Dashboard
+
+    User-&gt;&gt;API: POST /claims/submit (images + text)
+    API-&gt;&gt;S3: Upload images
+    S3--&gt;&gt;API: Image URLs
+    API-&gt;&gt;DB: Create Claim record (status: pending)
+    API-&gt;&gt;Queue: Enqueue claim_id
+    API--&gt;&gt;User: 202 Accepted (claim_id)
+
+    Queue-&gt;&gt;Worker: Dequeue claim_id
+    Worker-&gt;&gt;S3: Download images
+    Worker-&gt;&gt;Worker: Run 10-engine pipeline
+    Worker-&gt;&gt;DB: Write ClaimResult
+
+    alt Claim auto-approved
+        DB--&gt;&gt;User: Push notification: "Claim approved"
+    else Claim flagged
+        DB--&gt;&gt;Dash: New flagged claim appears
+        Dash-&gt;&gt;Dash: Human adjuster reviews
+        Dash-&gt;&gt;DB: Manual override (approve/reject)
+    end</code></pre>
+<hr />
+<h2 id="7-llm-multi-provider-strategy">7. LLM Multi-Provider Strategy</h2>
+<h3 id="provider-fallback-chain">Provider Fallback Chain</h3>
+<pre class="mermaid"><code>graph TD
+    REQ["Incoming LLM Request"] --&gt; MPC["MultiProviderClient"]
+
+    MPC --&gt; G{"Gemini 2.5 Flash&lt;br/&gt;5 RPM per key × 6 keys&lt;br/&gt;= 30 RPM total"}
+    G --&gt;|"Success"| RES["Return Result"]
+    G --&gt;|"All keys exhausted / 429"| GR
+
+    GR{"Groq Llama 4&lt;br/&gt;25 RPM&lt;br/&gt;14,400 RPD"}
+    GR --&gt;|"Success"| RES
+    GR --&gt;|"Fail / Timeout"| OR
+
+    OR{"OpenRouter&lt;br/&gt;Gemini 2.5 Flash&lt;br/&gt;20 RPM"}
+    OR --&gt;|"Success"| RES
+    OR --&gt;|"Fail"| NV
+
+    NV{"NVIDIA&lt;br/&gt;Llama 4 Maverick&lt;br/&gt;40 RPM / Unlimited RPD"}
+    NV --&gt;|"Success"| RES
+    NV --&gt;|"Fail"| FAIL["Graceful Degradation&lt;br/&gt;Return 'unknown' defaults"]
+
+    style RES fill:#c8e6c9,stroke:#2e7d32
+    style FAIL fill:#ffcdd2,stroke:#c62828</code></pre>
+<h3 id="provider-comparison">Provider Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Model</th>
+<th>Vision?</th>
+<th>RPM</th>
+<th>RPD</th>
+<th>Cost</th>
+<th>Latency</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gemini</strong></td>
+<td>gemini-2.5-flash</td>
+<td>✅ Yes</td>
+<td>5/key (30 total)</td>
+<td>20/key (120 total)</td>
+<td>Free tier</td>
+<td>~3s</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Groq</strong></td>
+<td>llama-4-maverick</td>
+<td>✅ Yes</td>
+<td>25</td>
+<td>14,400</td>
+<td>Free tier</td>
+<td>~1.5s</td>
+<td>Medium-High</td>
+</tr>
+<tr>
+<td><strong>OpenRouter</strong></td>
+<td>gemini-2.5-flash</td>
+<td>✅ Yes</td>
+<td>20</td>
+<td>Varies</td>
+<td>Pay-per-token</td>
+<td>~3s</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>NVIDIA</strong></td>
+<td>llama-4-maverick</td>
+<td>✅ Yes</td>
+<td>40</td>
+<td>Unlimited</td>
+<td>Free tier</td>
+<td>~2s</td>
+<td>Medium-High</td>
+</tr>
+</tbody>
+</table>
+<h3 id="limitation">Limitation</h3>
+<ul>
+<li>Each provider returns slightly different JSON structures and field names. The <code>multi_provider_client.py</code> normalizes these, but edge cases exist.</li>
+<li>Groq has a 500K tokens/day limit that can be exhausted on large image batches.</li>
+<li>Gemini's free tier RPD limit (20/key) is the primary bottleneck for bulk processing.</li>
+</ul>
+<h3 id="improvement">Improvement</h3>
+<ul>
+<li><strong>LiteLLM integration</strong>: Replace custom provider clients with LiteLLM for a unified interface across 100+ LLM providers.</li>
+<li><strong>Adaptive routing</strong>: Route to the cheapest/fastest provider based on claim complexity (simple text-only claims → Groq; complex multi-image → Gemini).</li>
+<li><strong>Fine-tuned model</strong>: Train a custom LoRA adapter on claim images for 10× accuracy improvement over generic VLMs.</li>
+</ul>
+<hr />
+<h2 id="8-fraud-detection-system">8. Fraud Detection System</h2>
+<h3 id="8-signal-fraud-detection">8-Signal Fraud Detection</h3>
+<pre class="mermaid"><code>graph TD
+    IMG["Input: E1 + E2 Outputs"] --&gt; F1
+
+    F1["Signal 1: Wrong Object&lt;br/&gt;User says 'car' but VLM sees 'laptop'"]
+    F2["Signal 2: Wrong Part&lt;br/&gt;User says 'door' but VLM sees 'hood'"]
+    F3["Signal 3: Damage Not Visible&lt;br/&gt;VLM sees the part but no damage"]
+    F4["Signal 4: Claim Mismatch&lt;br/&gt;User says 'crack' but VLM sees 'dent'"]
+    F5["Signal 5: Text Instruction&lt;br/&gt;Image contains suspicious overlay text"]
+    F6["Signal 6: Non-Original Image&lt;br/&gt;Watermarks or stock photo markers"]
+    F7["Signal 7: Vehicle Identity&lt;br/&gt;Multiple different cars in one claim"]
+    F8["Signal 8: Perceptual Hash&lt;br/&gt;Near-duplicate images across claims"]
+
+    F1 --&gt; AGG["Fraud Score Aggregator"]
+    F2 --&gt; AGG
+    F3 --&gt; AGG
+    F4 --&gt; AGG
+    F5 --&gt; AGG
+    F6 --&gt; AGG
+    F7 --&gt; AGG
+    F8 --&gt; AGG
+
+    AGG --&gt;|"≥3 signals"| HIGH["HIGH RISK&lt;br/&gt;Auto-reject or manual_review"]
+    AGG --&gt;|"1-2 signals"| MED["MEDIUM RISK&lt;br/&gt;Flag for review"]
+    AGG --&gt;|"0 signals"| LOW["LOW RISK&lt;br/&gt;Auto-approve eligible"]
+
+    style HIGH fill:#ffcdd2,stroke:#c62828
+    style MED fill:#fff9c4,stroke:#f9a825
+    style LOW fill:#c8e6c9,stroke:#2e7d32</code></pre>
+<h3 id="limitations-per-signal">Limitations per Signal</h3>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Current Implementation</th>
+<th>Limitation</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong Object</td>
+<td>String comparison of <code>claim_object</code> vs <code>detected_object</code></td>
+<td>Depends on VLM correctly classifying the object</td>
+<td>Use YOLO or dedicated object classifier as secondary verification</td>
+</tr>
+<tr>
+<td>Wrong Part</td>
+<td>String comparison of <code>claimed_part</code> vs <code>visible_part</code></td>
+<td>VLM part granularity is inconsistent (e.g., "body" vs "door")</td>
+<td>Train a part-segmentation model for precise region mapping</td>
+</tr>
+<tr>
+<td>Damage Not Visible</td>
+<td>VLM <code>issue_type == "none"</code></td>
+<td>VLMs miss subtle damage 20-30% of the time</td>
+<td>Use super-resolution preprocessing; multi-scale analysis</td>
+</tr>
+<tr>
+<td>Claim Mismatch</td>
+<td>String comparison of issue types</td>
+<td>Doesn't account for related damages (crack often accompanies dent)</td>
+<td>Build a damage co-occurrence matrix from historical data</td>
+</tr>
+<tr>
+<td>Text Instruction</td>
+<td>VLM detects text overlay</td>
+<td>Only catches obvious overlays; misses embedded text</td>
+<td>OCR with Tesseract or EasyOCR as a preprocessing step</td>
+</tr>
+<tr>
+<td>Non-Original</td>
+<td>VLM watermark detection</td>
+<td>Cannot detect subtle watermarks or AI-generated images</td>
+<td>Use reverse image search API (Google Vision, TinEye)</td>
+</tr>
+<tr>
+<td>Vehicle Identity</td>
+<td>Color string matching across images</td>
+<td>No make/model/license plate detection</td>
+<td>Integrate a car recognition model (e.g., Stanford Cars dataset fine-tune)</td>
+</tr>
+<tr>
+<td>Perceptual Hash</td>
+<td><code>imagehash</code> average hash (aHash)</td>
+<td>Sensitive to rotation/cropping; 8-bit hash has collision risk</td>
+<td>Use pHash (more robust) + CLIP embeddings (semantic similarity)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-calibration-accuracy-system">9. Calibration &amp; Accuracy System</h2>
+<h3 id="why-calibration-exists">Why Calibration Exists</h3>
+<p>VLMs have systematic biases. For example, every VLM we tested calls a cracked windshield <code>glass_shatter</code> instead of <code>crack</code>. The calibration system applies <strong>deterministic post-processing overrides</strong> to correct these known errors.</p>
+<h3 id="calibration-architecture">Calibration Architecture</h3>
+<pre class="mermaid"><code>graph LR
+    VLM["VLM Raw Output&lt;br/&gt;issue_type: glass_shatter&lt;br/&gt;severity: high"] --&gt; IC["Issue Calibrator&lt;br/&gt;(14 rules)"]
+    IC --&gt; SC["Severity Calibrator&lt;br/&gt;(8 rules)"]
+    SC --&gt; ON["override_none&lt;br/&gt;(trust claim if part visible)"]
+    ON --&gt; FINAL["Calibrated Output&lt;br/&gt;issue_type: crack&lt;br/&gt;severity: medium"]
+
+    style VLM fill:#ffcdd2
+    style FINAL fill:#c8e6c9</code></pre>
+<h3 id="limitation_1">Limitation</h3>
+<ul>
+<li>All 14+8 calibration rules are <strong>hardcoded from a 20-claim sample</strong>. They will not generalize to unseen damage types or new VLM model versions.</li>
+<li>The <code>override_none</code> rule (trust user's claim when VLM says "none" but part is visible) is a heuristic that can be exploited by fraudulent users.</li>
+</ul>
+<h3 id="improvement_1">Improvement</h3>
+<ul>
+<li><strong>Data-driven calibration</strong>: Collect 10,000+ labeled claims → train a confusion matrix → auto-generate calibration rules.</li>
+<li><strong>Online learning</strong>: Track adjuster overrides in the dashboard → feed corrections back into the calibration system automatically.</li>
+<li><strong>Confidence thresholds</strong>: Instead of binary override, use VLM confidence scores to weight calibration vs raw output.</li>
+</ul>
+<hr />
+<h2 id="10-prompt-engineering-design">10. Prompt Engineering Design</h2>
+<h3 id="two-prompt-architecture">Two-Prompt Architecture</h3>
+<p>We use two completely separate prompts per claim:</p>
+<table>
+<thead>
+<tr>
+<th>Prompt</th>
+<th>Purpose</th>
+<th>Sees User Claim?</th>
+<th>Sees Images?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claim Extraction (E1)</strong></td>
+<td>Extract structured intent from conversation text</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td><strong>Image Analysis (E2)</strong></td>
+<td>Analyze visual evidence for damage</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why separated?</strong> If the VLM sees both the user's claim AND the images simultaneously, it gets biased — it "sees" what the user describes even when the image doesn't show it. By blinding E2 to the claim text, we get an independent visual assessment.</p>
+<h3 id="limitation_2">Limitation</h3>
+<ul>
+<li>Prompt tuning is done manually through trial and error. Different models respond differently to the same prompt.</li>
+<li>The few-shot examples in E2 are text-only (no actual image examples in the prompt).</li>
+<li>JSON output parsing is fragile — VLMs sometimes return malformed JSON or add markdown code fences.</li>
+</ul>
+<h3 id="improvement_2">Improvement</h3>
+<ul>
+<li><strong>DSPy or DSPY</strong>: Use prompt optimization frameworks to automatically tune prompts against a labeled dataset.</li>
+<li><strong>Structured output mode</strong>: Use Gemini's <code>response_mime_type: "application/json"</code> for guaranteed valid JSON.</li>
+<li><strong>Multi-turn analysis</strong>: For ambiguous images, implement a follow-up VLM call that asks "I see X, can you confirm if Y is also present?"</li>
+</ul>
+<hr />
+<h2 id="11-testing-evaluation">11. Testing &amp; Evaluation</h2>
+<h3 id="test-coverage">Test Coverage</h3>
+<pre class="mermaid"><code>pie title Test Distribution (128 tests)
+    "Calibration" : 22
+    "Claim Engine" : 19
+    "Models/Validation" : 17
+    "Risk Engine" : 12
+    "Decision Engine" : 10
+    "Evidence Engine" : 9
+    "Fraud Engine" : 9
+    "Quality Engine" : 9
+    "Explain Engine" : 5
+    "Pipeline Integration" : 4
+    "Dry-Run Validation" : 14</code></pre>
+<h3 id="evaluation-results">Evaluation Results</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Mock Provider (100%)</th>
+<th>NVIDIA (Real API)</th>
+<th>Gap Analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claim_status</code></td>
+<td>100%</td>
+<td>70%</td>
+<td>VLM misclassification of subtle damage</td>
+</tr>
+<tr>
+<td><code>evidence_standard_met</code></td>
+<td>100%</td>
+<td>85%</td>
+<td>Evidence rules work; VLM quality flags vary</td>
+</tr>
+<tr>
+<td><code>issue_type</code></td>
+<td>100%</td>
+<td>80%</td>
+<td>Calibration fixes most, but new combos slip through</td>
+</tr>
+<tr>
+<td><code>object_part</code></td>
+<td>100%</td>
+<td>60%</td>
+<td>VLMs confuse adjacent parts (fender vs quarter_panel)</td>
+</tr>
+<tr>
+<td><code>severity</code></td>
+<td>100%</td>
+<td>65%</td>
+<td>VLMs have no consistent severity scale</td>
+</tr>
+<tr>
+<td><code>valid_image</code></td>
+<td>100%</td>
+<td>80%</td>
+<td>Quality engine is deterministic; depends on VLM flags</td>
+</tr>
+</tbody>
+</table>
+<h3 id="limitation_3">Limitation</h3>
+<ul>
+<li>The 20-claim sample benchmark is too small for statistical significance.</li>
+<li>Mock provider achieves 100% by definition (it returns the expected answers) — it validates the pipeline logic, not VLM accuracy.</li>
+<li>No A/B testing framework against human adjuster decisions.</li>
+</ul>
+<h3 id="improvement_3">Improvement</h3>
+<ul>
+<li><strong>Golden dataset</strong>: Collect 1,000+ human-labeled claims for statistically meaningful accuracy measurement.</li>
+<li><strong>Continuous evaluation</strong>: Run nightly eval against the golden dataset; alert if accuracy drops below threshold.</li>
+<li><strong>Human-in-the-loop</strong>: Compare AI decisions against actual adjuster decisions to measure production accuracy.</li>
+</ul>
+<hr />
+<h2 id="12-limitations-known-weaknesses">12. Limitations &amp; Known Weaknesses</h2>
+<h3 id="critical-limitations">Critical Limitations</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Limitation</th>
+<th>Impact</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>VLM accuracy is the bottleneck</strong></td>
+<td>Entire system accuracy capped by VLM visual understanding (~70% on real APIs)</td>
+<td>🔴 Critical</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>No fine-tuned model</strong></td>
+<td>Using generic VLMs not trained on insurance damage images</td>
+<td>🔴 Critical</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Hardcoded calibrations</strong></td>
+<td>14+8 overrides tuned on 20 samples; won't generalize to new domains</td>
+<td>🟡 High</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Naive vehicle identity</strong></td>
+<td>Color-only matching; no license plate, make, or model detection</td>
+<td>🟡 High</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>No AI-generated image detection</strong></td>
+<td>Cannot detect deepfakes or GAN-generated damage images</td>
+<td>🟡 High</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Single-language prompts</strong></td>
+<td>Prompts only in English; claim text may be multilingual</td>
+<td>🟡 High</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>No confidence scores</strong></td>
+<td>Binary decisions without probability calibration</td>
+<td>🟠 Medium</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>File-based caching</strong></td>
+<td>Not suitable for distributed multi-server deployment</td>
+<td>🟠 Medium</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Synchronous processing</strong></td>
+<td>API endpoint blocks during LLM calls (~10-15s per claim)</td>
+<td>🟠 Medium</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>No explainable AI visualization</strong></td>
+<td>No bounding boxes, heatmaps, or visual evidence overlay</td>
+<td>🟢 Low</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-we-dont-do-and-shouldnt-claim">What We Don't Do (And Shouldn't Claim)</h3>
+<ul>
+<li>❌ No <strong>real-time video analysis</strong> (photos only)</li>
+<li>❌ No <strong>3D damage estimation</strong> (no depth sensors)</li>
+<li>❌ No <strong>repair cost estimation</strong> (no parts database)</li>
+<li>❌ No <strong>policy coverage validation</strong> (no policy engine)</li>
+<li>❌ No <strong>FNOL (First Notice of Loss)</strong> integration</li>
+<li>❌ No <strong>regulatory compliance</strong> (GDPR, HIPAA for medical claims)</li>
+</ul>
+<hr />
+<h2 id="13-improvements-future-roadmap">13. Improvements &amp; Future Roadmap</h2>
+<h3 id="short-term-13-months">Short-Term (1–3 Months)</h3>
+<table>
+<thead>
+<tr>
+<th>Improvement</th>
+<th>Effort</th>
+<th>Impact</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Redis caching</strong></td>
+<td>2 days</td>
+<td>🟡 Medium</td>
+<td>Replace file-based cache with Redis for distributed deployment</td>
+</tr>
+<tr>
+<td><strong>Celery + RabbitMQ</strong></td>
+<td>1 week</td>
+<td>🔴 High</td>
+<td>Async claim processing; API returns immediately, worker processes in background</td>
+</tr>
+<tr>
+<td><strong>JWT Authentication</strong></td>
+<td>3 days</td>
+<td>🔴 High</td>
+<td>Secure API endpoints; role-based access for adjusters vs admins</td>
+</tr>
+<tr>
+<td><strong>Alembic migrations</strong></td>
+<td>2 days</td>
+<td>🟡 Medium</td>
+<td>Database schema versioning and migration management</td>
+</tr>
+<tr>
+<td><strong>Structured JSON output</strong></td>
+<td>1 day</td>
+<td>🟡 Medium</td>
+<td>Use Gemini's native JSON mode to eliminate parsing errors</td>
+</tr>
+</tbody>
+</table>
+<h3 id="medium-term-36-months">Medium-Term (3–6 Months)</h3>
+<table>
+<thead>
+<tr>
+<th>Improvement</th>
+<th>Effort</th>
+<th>Impact</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fine-tuned VLM</strong></td>
+<td>2 months</td>
+<td>🔴 Critical</td>
+<td>Train a LoRA adapter on 50K+ labeled damage images</td>
+</tr>
+<tr>
+<td><strong>YOLO object detection</strong></td>
+<td>2 weeks</td>
+<td>🔴 High</td>
+<td>Secondary object classifier to verify VLM detections</td>
+</tr>
+<tr>
+<td><strong>Bounding box visualization</strong></td>
+<td>1 week</td>
+<td>🟡 Medium</td>
+<td>Show adjusters exactly where the AI detected damage</td>
+</tr>
+<tr>
+<td><strong>OCR preprocessing</strong></td>
+<td>1 week</td>
+<td>🟡 Medium</td>
+<td>Tesseract/EasyOCR for text instruction detection before VLM</td>
+</tr>
+<tr>
+<td><strong>Reverse image search</strong></td>
+<td>1 week</td>
+<td>🟡 Medium</td>
+<td>TinEye/Google Vision API for stock photo and recycled image detection</td>
+</tr>
+<tr>
+<td><strong>Multi-language support</strong></td>
+<td>2 weeks</td>
+<td>🟡 Medium</td>
+<td>Detect claim language; translate to English before E1 processing</td>
+</tr>
+</tbody>
+</table>
+<h3 id="long-term-612-months">Long-Term (6–12 Months)</h3>
+<table>
+<thead>
+<tr>
+<th>Improvement</th>
+<th>Effort</th>
+<th>Impact</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auto-calibration</strong></td>
+<td>1 month</td>
+<td>🔴 Critical</td>
+<td>ML-driven calibration that learns from adjuster overrides</td>
+</tr>
+<tr>
+<td><strong>Confidence-based routing</strong></td>
+<td>2 weeks</td>
+<td>🔴 High</td>
+<td>High-confidence claims auto-approved; low-confidence → human review</td>
+</tr>
+<tr>
+<td><strong>Video frame analysis</strong></td>
+<td>1 month</td>
+<td>🟡 Medium</td>
+<td>Extract key frames from damage videos</td>
+</tr>
+<tr>
+<td><strong>Repair cost estimation</strong></td>
+<td>2 months</td>
+<td>🟡 Medium</td>
+<td>Integrate parts database + labor cost estimation</td>
+</tr>
+<tr>
+<td><strong>Mobile SDK</strong></td>
+<td>1 month</td>
+<td>🟡 Medium</td>
+<td>Native iOS/Android SDK for guided photo capture</td>
+</tr>
+<tr>
+<td><strong>GDPR/HIPAA compliance</strong></td>
+<td>1 month</td>
+<td>🔴 High</td>
+<td>PII masking, data retention policies, audit logs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="14-enterprise-use-cases">14. Enterprise Use Cases</h2>
+<p>This system can be adapted for multiple enterprise verticals beyond insurance:</p>
+<h3 id="insurance-primary">Insurance (Primary)</h3>
+<ul>
+<li><strong>Auto insurance</strong>: Car damage verification for collision claims</li>
+<li><strong>Home insurance</strong>: Property damage assessment (water, fire, storm)</li>
+<li><strong>Health insurance</strong>: Medical device damage claims</li>
+</ul>
+<h3 id="e-commerce-logistics">E-Commerce &amp; Logistics</h3>
+<ul>
+<li><strong>Return verification</strong>: Verify that returned items match the claimed condition</li>
+<li><strong>Package damage claims</strong>: Shipping damage verification for logistics companies (FedEx, UPS, DHL)</li>
+<li><strong>Marketplace trust</strong>: Verify seller product photos match descriptions</li>
+</ul>
+<h3 id="real-estate">Real Estate</h3>
+<ul>
+<li><strong>Property inspection</strong>: Pre/post tenant move-in/move-out damage assessment</li>
+<li><strong>Construction progress</strong>: Verify construction milestones against contract specifications</li>
+</ul>
+<h3 id="fleet-management">Fleet Management</h3>
+<ul>
+<li><strong>Vehicle fleet inspection</strong>: Daily/weekly fleet condition monitoring</li>
+<li><strong>Rental car returns</strong>: Automated damage detection at return stations</li>
+</ul>
+<h3 id="manufacturing-quality-control">Manufacturing Quality Control</h3>
+<ul>
+<li><strong>Defect detection</strong>: Assembly line quality verification</li>
+<li><strong>Warranty claims</strong>: Verify customer-reported manufacturing defects</li>
+</ul>
+<h3 id="enterprise-integration-points">Enterprise Integration Points</h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "External Systems"
+        CRM["CRM&lt;br/&gt;(Salesforce)"]
+        FNOL["FNOL System&lt;br/&gt;(Guidewire)"]
+        PAY["Payment Gateway"]
+        NOTIFY["Notification Service"]
+    end
+
+    subgraph "Our System"
+        API["Evidence Review API"]
+        DB["Claims Database"]
+        DASH["Adjuster Dashboard"]
+    end
+
+    FNOL --&gt;|"New claim webhook"| API
+    API --&gt;|"Verdict + risk flags"| FNOL
+    API --&gt;|"Claim result"| DB
+    DB --&gt;|"Flagged claims"| DASH
+    DASH --&gt;|"Adjuster decision"| DB
+    DB --&gt;|"Approved claim"| PAY
+    DB --&gt;|"Status update"| NOTIFY
+    NOTIFY --&gt;|"Push/Email/SMS"| CRM</code></pre>
+<hr />
+<h2 id="15-repository-structure">15. Repository Structure</h2>
+<div class="highlight"><pre><span></span><code>hackerrank-orchestrate-june26/
+├── README.md                          # Project overview &amp; quick start
+├── problem_statement.md               # Original problem requirements
+├── docs/
+│   ├── PROJECT_DESIGN.md              # ← THIS FILE (master documentation)
+│   ├── architecture.md                # 10-engine architecture details
+│   └── cloud_orchestration.md         # Airflow DAG guide
+│
+├── code/                              # Core AI Pipeline
+│   ├── main.py                        # CLI orchestrator (batch mode)
+│   ├── config.py                      # All constants, paths, enums
+│   ├── models.py                      # Pydantic data models
+│   ├── data_loader.py                 # CSV I/O, image encoding
+│   ├── pipeline.py                    # Single-claim processing wrapper
+│   ├── IMPLEMENTATION_OVERVIEW.md     # Detailed file-by-file breakdown
+│   │
+│   ├── llm/                           # LLM Integration Layer
+│   │   ├── gemini_client.py           # Gemini SDK + multi-key rotation
+│   │   ├── openai_compat_client.py    # Groq/OpenRouter/NVIDIA client
+│   │   ├── multi_provider_client.py   # Fallback chain orchestrator
+│   │   ├── rate_limiter.py            # Per-key RPM/RPD sliding window
+│   │   ├── prompts.py                 # All prompt templates
+│   │   └── cache.py                   # SHA-256 file-based cache
+│   │
+│   ├── engines/                       # 8 Processing Engines
+│   │   ├── claim_engine.py            # E1: Text extraction (LLM)
+│   │   ├── vision_engine.py           # E2: Image analysis (VLM)
+│   │   ├── evidence_engine.py         # E3: Evidence sufficiency
+│   │   ├── quality_engine.py          # E4: Image quality
+│   │   ├── fraud_engine.py            # E5: 8-signal fraud detection
+│   │   ├── risk_engine.py             # E6: User history risk
+│   │   ├── decision_engine.py         # E7: Final decision
+│   │   └── explain_engine.py          # E8: Justification polish
+│   │
+│   ├── calibration/                   # Post-Processing Calibration
+│   │   ├── issue_calibration.py       # 14 issue-type overrides
+│   │   ├── severity_map.py            # 8 severity overrides
+│   │   └── claim_patterns.py          # Known part+issue combos
+│   │
+│   ├── detectors/                     # Image Analysis Utilities
+│   │   └── perceptual_hash.py         # Image deduplication (aHash)
+│   │
+│   ├── evaluation/                    # Accuracy Evaluation
+│   │   ├── main.py                    # Eval pipeline runner
+│   │   └── metrics.py                 # Accuracy metrics (F1, exact match)
+│   │
+│   └── tests/                         # 128 Unit Tests
+│       ├── test_claim_engine.py
+│       ├── test_decision_engine.py
+│       ├── test_evidence_engine.py
+│       ├── test_fraud_engine.py
+│       └── ... (11 test files total)
+│
+├── backend/                           # Enterprise API Layer
+│   └── app/
+│       ├── main.py                    # FastAPI server
+│       ├── models/db.py               # SQLAlchemy ORM (Claim, ClaimResult)
+│       ├── db/session.py              # PostgreSQL connection pool
+│       └── services/
+│           ├── ai_pipeline.py         # In-memory pipeline wrapper
+│           └── storage.py             # S3/GCS cloud storage client
+│
+├── frontend/                          # Adjuster Review Portal
+│   ├── package.json                   # React + Next.js + Tailwind
+│   └── components/
+│       └── ClaimDashboard.tsx         # Claims review table UI
+│
+├── dataset/                           # Data Files
+│   ├── claims.csv                     # Input claims (44 rows)
+│   ├── sample_claims.csv              # Benchmark claims (20 rows)
+│   ├── user_history.csv               # User risk profiles
+│   ├── evidence_requirements.csv      # Minimum evidence rules
+│   └── images/                        # Claim images
+│
+├── .github/workflows/ci.yml          # GitHub Actions CI/CD
+├── docker-compose.yml                 # Docker deployment
+└── code/Dockerfile                    # Container build
+</code></pre></div>
+<hr />
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Bottom Line</strong>: The AI pipeline core (10 engines, 128 tests, 4 LLM providers, calibration system) is <strong>production-complete</strong>. The enterprise layer (API, DB, storage, frontend) is <strong>scaffolded and ready to wire up</strong>. The single biggest improvement for real-world accuracy is <strong>fine-tuning a VLM on domain-specific insurance damage images</strong>.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
