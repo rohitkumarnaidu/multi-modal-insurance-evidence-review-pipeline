@@ -8,9 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.5.4",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.2",
+    "@types/react": "19.2.18",
+    "typescript": "7.0.2"
   }
 }
