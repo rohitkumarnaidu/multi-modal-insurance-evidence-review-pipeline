@@ -6,16 +6,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tests.conftest import MockLLMClient, make_claim
-from data_loader import load_claims, load_user_history, load_evidence_requirements
+from data_loader import load_user_history, load_evidence_requirements
 from engines.claim_engine import extract_claim_with_llm
 from engines.vision_engine import analyze_single_image
 from engines.evidence_engine import check_evidence_sufficiency
 from engines.quality_engine import assess_image_quality
 from engines.fraud_engine import detect_fraud
-from engines.risk_engine import get_user_risk_flags, get_risk_summary
+from engines.risk_engine import get_user_risk_flags
 from engines.decision_engine import make_decision
-from engines.explain_engine import polish_output
-from models import ClaimInput, ClaimExtraction, ClaimOutput
 
 
 class TestEndToEndPipeline:

@@ -37,7 +37,7 @@ for field in fields:
         print(f"    WRONG {uid} ({co}): expected={g} got={p}")
 
 # Risk flags F1
-print(f"\n  --- Risk Flags Analysis ---")
+print("\n  --- Risk Flags Analysis ---")
 tp = fp = fn = 0
 for uid in sorted(gt.keys()):
     if uid not in pred:

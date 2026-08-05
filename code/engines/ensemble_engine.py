@@ -10,13 +10,12 @@ Confidence is calculated from agreement rate across providers.
 from __future__ import annotations
 
 import csv
-import json
 import logging
 from collections import Counter
 from pathlib import Path
 from typing import Optional
 
-from config import CODE_DIR, DATASET_DIR, OUTPUT_CSV
+from config import OUTPUT_CSV
 from data_loader import write_output_csv
 
 logger = logging.getLogger(__name__)

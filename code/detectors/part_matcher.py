@@ -16,7 +16,6 @@ Design:
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 from config import OBJECT_PARTS_BY_TYPE
 
@@ -53,7 +52,6 @@ def _build_part_embeddings():
     if model is None:
         return {}
 
-    import numpy as np
     all_parts = set()
     for parts in OBJECT_PARTS_BY_TYPE.values():
         all_parts.update(parts)

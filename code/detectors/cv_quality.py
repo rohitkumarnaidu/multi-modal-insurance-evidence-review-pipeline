@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 
 BLUR_THRESHOLD = 100
 GLARE_PIXEL_THRESHOLD = 250

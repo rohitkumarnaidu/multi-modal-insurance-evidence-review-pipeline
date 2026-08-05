@@ -2,7 +2,13 @@
 Dry-run validation of the full pipeline logic.
 Tests all deterministic engines without making API calls.
 """
+# ruff: noqa: F403, F405, F821, E402
+import csv
+import os
 import sys
+import tempfile
+from pathlib import Path
+
 sys.path.insert(0, ".")
 
 from config import *
@@ -76,14 +82,14 @@ analyses_ok = [
     ImageAnalysis(image_id="img_1", image_path="test.jpg", is_usable=True, is_blurry=False),
 ]
 q = assess_image_quality(analyses_ok)
-assert q["valid_image"] == True
+assert q["valid_image"]
 print("[OK] Quality assessment: valid image")
 
 analyses_watermark = [
     ImageAnalysis(image_id="img_1", image_path="test.jpg", is_usable=True, has_watermark=True),
 ]
 q2 = assess_image_quality(analyses_watermark)
-assert q2["valid_image"] == False
+assert not q2["valid_image"]
 assert "non_original_image" in q2["quality_flags"]
 print("[OK] Quality assessment: watermark detected = invalid")
 
@@ -92,7 +98,7 @@ analyses_mixed = [
     ImageAnalysis(image_id="img_2", image_path="t2.jpg", is_usable=True, is_blurry=False),
 ]
 q3 = assess_image_quality(analyses_mixed)
-assert q3["valid_image"] == True
+assert q3["valid_image"]
 assert "blurry_image" in q3["quality_flags"]
 print("[OK] Quality assessment: mixed blur = valid with flag")
 
@@ -212,13 +218,6 @@ assert row["risk_flags"] == "blurry_image;manual_review_required;user_history_ri
 print("[OK] Output validation: risk flags sorted and deduplicated")
 
 # 10. Test CSV output format
-import csv
-import os
-import tempfile
-from pathlib import Path
-
-from data_loader import write_output_csv
-
 tmp = Path(tempfile.gettempdir()) / "test_output.csv"
 write_output_csv([row], tmp)
 with open(tmp, "r") as f:

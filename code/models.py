@@ -7,7 +7,6 @@ Strict validation ensures outputs always conform to allowed values.
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator
 

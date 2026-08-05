@@ -1,4 +1,4 @@
-import csv, sys
+import csv
 from config import DATASET_DIR
 path = DATASET_DIR / "sample_claims.csv"
 with open(path, newline="", encoding="utf-8") as f:

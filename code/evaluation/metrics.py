@@ -7,11 +7,9 @@ hierarchical fields. Generates HTML reports with confusion matrices.
 
 from __future__ import annotations
 
-import json
 import logging
 from collections import Counter
 from datetime import datetime
-from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -89,17 +87,17 @@ def partial_credit_object_part(
     car_exterior = {"front_bumper", "rear_bumper", "door", "hood", "windshield", "fender", "body"}
     car_lighting = {"headlight", "taillight", "side_mirror"}
     car_quarter = {"quarter_panel"}
-    car_parts = car_exterior | car_lighting | car_quarter
+    car_exterior | car_lighting | car_quarter
 
     laptop_display = {"screen", "lid"}
     laptop_input = {"keyboard", "trackpad"}
     laptop_structure = {"hinge", "corner", "port", "base", "body"}
-    laptop_parts = laptop_display | laptop_input | laptop_structure
+    laptop_display | laptop_input | laptop_structure
 
     package_exterior = {"box", "package_corner", "package_side"}
     package_closure = {"seal", "label"}
     package_inner = {"contents", "item"}
-    package_parts = package_exterior | package_closure | package_inner
+    package_exterior | package_closure | package_inner
 
     part_categories = {
         "car": [car_exterior, car_lighting, car_quarter],
@@ -499,7 +497,7 @@ def format_report(metrics: dict) -> str:
 
     if "risk_flags_f1" in metrics:
         rf = metrics["risk_flags_f1"]
-        lines.append(f"\n## Risk Flags F1")
+        lines.append("\n## Risk Flags F1")
         lines.append(f"- Micro F1: {rf['micro_f1']:.4f}")
         lines.append(f"- Macro F1: {rf['macro_f1']:.4f}")
 

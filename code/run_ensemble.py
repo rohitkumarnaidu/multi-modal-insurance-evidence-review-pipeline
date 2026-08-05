@@ -99,7 +99,7 @@ def main():
     print(f"Total claims: {len(ensemble_rows)}")
     low_conf = [r for r in ensemble_rows if r.get('_confidence_avg', 1.0) < 0.75]
     print(f"Low confidence: {len(low_conf)}/{len(ensemble_rows)}")
-    print(f"\nMajority Agreement (field-level):")
+    print("\nMajority Agreement (field-level):")
     for p, fields in agreement.get("majority_agreement", {}).items():
         avg = sum(fields.values()) / max(1, len(fields))
         print(f"  {p}: avg={avg:.1%}")

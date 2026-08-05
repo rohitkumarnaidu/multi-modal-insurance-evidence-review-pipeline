@@ -15,7 +15,6 @@ Cross-references claim extraction vs. vision findings to detect:
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 from models import ClaimExtraction, ClaimInput, FraudSignals, ImageAnalysis
 
@@ -504,7 +503,6 @@ def _check_sequential_images(
         return
 
     parsed = []
-    import re
     for dt in datetimes:
         try:
             from datetime import datetime as dt_parse
@@ -515,7 +513,6 @@ def _check_sequential_images(
     if len(parsed) < 2:
         return
 
-    from datetime import timedelta
     diffs = []
     for i in range(len(parsed)):
         for j in range(i + 1, len(parsed)):

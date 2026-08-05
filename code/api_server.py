@@ -7,7 +7,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from pipeline import process_claim
-from models import ClaimInput, ClaimOutput
+from models import ClaimInput
 from evaluation.main import run_evaluation
 
 app = FastAPI(

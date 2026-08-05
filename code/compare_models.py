@@ -21,13 +21,10 @@ from __future__ import annotations
 
 import argparse
 import csv
-import json
-import os
 from collections import Counter
 from typing import Any
 import subprocess
 import sys
-from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -90,7 +87,7 @@ def load_output(provider: str) -> dict[str, dict]:
 def generate_comparison_report(providers: list[str]):
     """Generate a side-by-side comparison of model outputs."""
     print(f"\n{'='*60}")
-    print(f"  GENERATING COMPARISON REPORT")
+    print("  GENERATING COMPARISON REPORT")
     print(f"{'='*60}\n")
 
     # Load all outputs
@@ -177,11 +174,11 @@ def generate_comparison_report(providers: list[str]):
     print(f"{'='*60}")
     print(f"\n  Models: {', '.join(active_providers)}")
     print(f"  Claims: {total}")
-    print(f"\n  Overall Agreement:")
+    print("\n  Overall Agreement:")
     print(f"    ✓ All models agree: {agreement_count}/{total} ({100*agreement_count/max(1,total):.1f}%)")
     print(f"    ✗ Disagreement:     {disagreement_count}/{total} ({100*disagreement_count/max(1,total):.1f}%)")
 
-    print(f"\n  Per-Field Agreement:")
+    print("\n  Per-Field Agreement:")
     for field in COMPARE_FIELDS:
         agree = field_agreements[field]
         total_f = agree + field_disagreements[field]
@@ -189,7 +186,7 @@ def generate_comparison_report(providers: list[str]):
         print(f"    {field:30s} {agree}/{total_f} agree ({pct:.1f}%)")
 
     # ── Per-model stats ──────────────────────────────────────────────────
-    print(f"\n  Per-Model Status Distribution:")
+    print("\n  Per-Model Status Distribution:")
     for p in active_providers:
         statuses: Counter[str] = Counter()
         unknowns = 0
@@ -205,7 +202,7 @@ def generate_comparison_report(providers: list[str]):
             print(f"      ⚠ API failures (unknown/unknown): {unknowns}")
 
     # ── Majority vote result ─────────────────────────────────────────────
-    print(f"\n  Generating majority-vote consensus output...")
+    print("\n  Generating majority-vote consensus output...")
     consensus_rows = []
     for uid in all_users:
         # Take majority vote for claim_status
@@ -248,7 +245,7 @@ def generate_comparison_report(providers: list[str]):
     print(f"\n  Comparison CSV: {comparison_csv}")
     print(f"  Consensus CSV:  {consensus_csv}")
     print(f"\n{'='*60}")
-    print(f"  DONE")
+    print("  DONE")
     print(f"{'='*60}\n")
 
 
@@ -279,7 +276,7 @@ def main():
             results[provider] = success
 
         print(f"\n{'='*60}")
-        print(f"  RUN SUMMARY")
+        print("  RUN SUMMARY")
         print(f"{'='*60}")
         for p, ok in results.items():
             print(f"  {'✓' if ok else '✗'} {p}")

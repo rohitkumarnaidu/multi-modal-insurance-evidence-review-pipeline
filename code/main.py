@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -20,7 +19,6 @@ from config import (
     CLAIMS_CSV,
     CODE_DIR,
     DATASET_DIR,
-    INTER_CLAIM_DELAY,
     METRICS_LOG,
     OUTPUT_CSV,
     SAMPLE_CLAIMS_CSV,
@@ -51,7 +49,7 @@ class SafeStreamHandler(logging.StreamHandler):
         except UnicodeEncodeError:
             msg = self.format(record)
             try:
-                stream.write(msg.encode("utf-8", errors="replace").decode("utf-8", errors="replace") + "\n")
+                self.stream.write(msg.encode("utf-8", errors="replace").decode("utf-8", errors="replace") + "\n")
             except Exception:
                 self.handleError(record)
 
@@ -163,7 +161,7 @@ def run_pipeline(
 ):
     start_time = time.time()
     logger.info("=" * 60)
-    logger.info(f"Multi-Modal Evidence Review Pipeline")
+    logger.info("Multi-Modal Evidence Review Pipeline")
     logger.info(f"Mode: {mode}")
     logger.info(f"Provider: {provider or 'auto (fallback chain)'}")
     logger.info(f"Parallel: {parallel} (workers={max_workers})")

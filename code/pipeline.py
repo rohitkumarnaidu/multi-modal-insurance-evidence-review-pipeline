@@ -8,7 +8,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from config import EVIDENCE_REQUIREMENTS_CSV
 from data_loader import load_evidence_requirements, load_user_history
 from engines.claim_engine import extract_claim_with_llm
 from engines.decision_engine import make_decision

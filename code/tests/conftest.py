@@ -1,16 +1,13 @@
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from models import (
-    ClaimExtraction, ClaimInput, ClaimOutput, EvidenceRequirement,
-    EvidenceSufficiency, FraudSignals, ImageAnalysis, UserHistory,
+    ClaimInput, ImageAnalysis,
 )
-from config import CAR_OBJECT_PARTS, LAPTOP_OBJECT_PARTS, PACKAGE_OBJECT_PARTS
 
 
 class MockLLMClient:

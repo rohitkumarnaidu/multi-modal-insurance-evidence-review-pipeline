@@ -186,7 +186,7 @@ def _build_operational_analysis(pipeline_metrics: dict) -> str:
         "## Token Usage\n",
         f"- Total input tokens: {_fmt_num(llm.get('total_input_tokens', 'N/A'))}",
         f"- Total output tokens: {_fmt_num(llm.get('total_output_tokens', 'N/A'))}",
-        f"- Image tokens (estimated): ~258 tokens per image\n",
+        "- Image tokens (estimated): ~258 tokens per image\n",
         "## Cost Estimate\n",
         f"- Estimated cost: ${llm.get('estimated_cost_usd', 'N/A')}",
         "- Pricing assumptions: Gemini 2.5 Flash ($0.15/1M input, $0.60/1M output)",
@@ -201,7 +201,7 @@ def _build_operational_analysis(pipeline_metrics: dict) -> str:
         "- Batching: Sequential processing with rate-limit pauses",
         f"- Cache hit rate: {cache.get('hit_rate', 0):.1%}\n",
         "## Images Processed\n",
-        f"- Total images: estimated ~115 (sample + test)",
+        "- Total images: estimated ~115 (sample + test)",
         "- Image sizes: 6KB - 355KB (mostly JPEG)",
     ]
     return "\n".join(lines)

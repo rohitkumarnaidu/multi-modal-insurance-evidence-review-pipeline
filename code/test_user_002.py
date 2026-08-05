@@ -1,10 +1,10 @@
-import sys
 import logging
 from pathlib import Path
 
 # Turn on debug logging
 logging.getLogger().setLevel(logging.DEBUG)
 
+# ruff: noqa: E402
 from main import run_pipeline
 
 print("STARTING TEST")
@@ -16,7 +16,7 @@ try:
         provider="mock",
         parallel=False
     )
-except Exception as e:
+except Exception:
     import traceback
     traceback.print_exc()
 print("FINISHED TEST")

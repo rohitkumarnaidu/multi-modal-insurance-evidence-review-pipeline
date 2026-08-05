@@ -9,9 +9,8 @@ Avoids redundant API calls on re-runs.
 import hashlib
 import json
 import logging
-import os
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
