@@ -119,31 +119,40 @@ Step 4 — Damage analysis:
 Step 5 — Summary:
   Is this image usable for damage assessment? How confident are you?
 
-EXAMPLE (for a car image):
-  reasoning: "Step 1: The image shows a silver sedan, consistent with a car.
-  The hood, front bumper, and driver-side door are visible. Step 2: The image
-  is well-lit, not blurry, no cropping. Step 3: No watermarks or text
-  instructions. Step 4: The front bumper has a visible crack approx 10cm long.
-  Hood and door are undamaged. Step 5: The image is usable, confidence high."
+FEW-SHOT EXAMPLES:
+Example 1 (Car):
+  reasoning: "Step 1: The image shows a silver sedan, consistent with a car. The hood, front bumper, and driver-side door are visible. Step 2: The image is well-lit, not blurry, no cropping. Step 3: No watermarks or text instructions. Step 4: The front bumper has a visible crack approx 10cm long. Hood and door are undamaged. Step 5: The image is usable, confidence high."
   visible_object_type: "car"
   visible_object_part: "front_bumper"
-  visible_parts_list: ["hood", "front_bumper", "driver_door"]
+  visible_parts_list: ["hood", "front_bumper", "door"]
   visible_issue_type: "crack"
   visible_severity: "medium"
   damage_evidence_level: "clear"
   damaged_parts: ["front_bumper"]
   vehicle_color: "silver"
-  is_blurry: false
-  is_low_light: false
-  is_cropped: false
-  has_wrong_angle: false
-  has_watermark: false
-  watermark_text: ""
-  has_text_instruction: false
-  text_instruction_content: ""
   is_usable: true
-  damage_description: "The front bumper has a visible crack approximately 10cm in length."
-  confidence: 0.92
+
+Example 2 (Package Seal vs Side):
+  reasoning: "Step 1: The image shows a cardboard box. The top flaps and the packaging tape holding them together are visible. Step 2: Lighting is adequate. Step 3: No watermarks. Step 4: The tape across the top is sliced open. The tape is the seal. The box cardboard itself is intact. Step 5: Usable."
+  visible_object_type: "package"
+  visible_object_part: "seal"
+  visible_parts_list: ["box", "seal"]
+  visible_issue_type: "torn_packaging"
+  visible_severity: "low"
+  damage_evidence_level: "clear"
+  damaged_parts: ["seal"]
+  is_usable: true
+
+Example 3 (Laptop Screen vs Hinge):
+  reasoning: "Step 1: The image shows an open laptop. The display area, keyboard, and the joint connecting them are visible. Step 2: Clear image. Step 3: Clean. Step 4: There is a heavy crack on the joint mechanism itself (the hinge). The screen glass is not cracked. Step 5: Usable."
+  visible_object_type: "laptop"
+  visible_object_part: "hinge"
+  visible_parts_list: ["screen", "keyboard", "hinge", "body"]
+  visible_issue_type: "crack"
+  visible_severity: "high"
+  damage_evidence_level: "clear"
+  damaged_parts: ["hinge"]
+  is_usable: true
 
 Respond with ONLY this JSON:
 {{

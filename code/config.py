@@ -78,9 +78,10 @@ RETRY_BASE_DELAY: Final = 2.0   # seconds
 RETRY_MAX_DELAY: Final = 60.0   # seconds
 INTER_CLAIM_DELAY: Final = 1.0  # seconds between claims
 
-# Batching
-BATCH_SIZE: Final = 5         # Process N claims concurrently
-BATCH_DELAY: Final = 1.0      # seconds between batches
+# Parallel Processing & Batching
+MAX_WORKERS: Final = int(os.environ.get("MAX_WORKERS", 4))
+BATCH_SIZE: Final = int(os.environ.get("BATCH_SIZE", 5))     # Process N claims concurrently
+BATCH_DELAY: Final = float(os.environ.get("BATCH_DELAY", 1.0)) # seconds between batches
 
 # Vision uploads are normalized before being sent to providers. This keeps
 # multimodal calls predictable while retaining enough resolution for damage review.

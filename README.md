@@ -50,14 +50,39 @@ NVIDIA_API_KEY=your_key
 ```
 
 ## Usage
+
+### Quick Start
+To get up and running quickly:
 ```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Add API keys
+echo "GEMINI_API_KEY=your_key_here" > code/.env
+
+# 3. Run the mock pipeline to verify functionality
 cd code
+python main.py --mode sample --provider mock --output ../dataset/sample_output.csv
+
+# 4. Run the evaluation script
+python evaluation/main.py --no-run
+```
+
+### Command Line Options
+```bash
 python main.py                          # Standard run (auto fallback)
 python main.py --mode sample            # Run on sample claims
 python main.py --provider nvidia        # Use specific provider
+python main.py --parallel --workers 10  # High-throughput parallel execution
 python main.py --retry-failed           # Re-process only failed claims
 python compare_models.py --report-only  # Cross-model comparison
 ```
+
+## Production Deployment
+For high-volume production use cases (e.g., thousands of claims per day):
+1. **Parallelization**: Set `MAX_WORKERS` in your `.env` or use the `--parallel` CLI flag. The system uses a ThreadPoolExecutor to handle concurrent API calls efficiently.
+2. **Robust Hashing**: The `perceptual_hash.py` engine supports local image hashing. In production, connect this to your cloud blob storage (e.g., S3 or GCS) for deduplication.
+3. **Orchestration**: See [Cloud Orchestration](docs/cloud_orchestration.md) for how to wrap this pipeline in Apache Airflow or Dagster.
 
 ## Pipeline Flow
 1. Load claims from CSV + user history + evidence requirements

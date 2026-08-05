@@ -24,6 +24,7 @@ from config import (
     METRICS_LOG,
     OUTPUT_CSV,
     SAMPLE_CLAIMS_CSV,
+    MAX_WORKERS as DEFAULT_MAX_WORKERS,
 )
 from data_loader import (
     load_claims,
@@ -373,8 +374,8 @@ def main():
     parser.add_argument(
         "--workers",
         type=int,
-        default=4,
-        help="Number of parallel workers (default: 4)",
+        default=DEFAULT_MAX_WORKERS,
+        help=f"Number of parallel workers (default: {DEFAULT_MAX_WORKERS})",
     )
     args = parser.parse_args()
 
