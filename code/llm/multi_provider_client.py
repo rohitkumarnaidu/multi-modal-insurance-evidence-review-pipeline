@@ -15,7 +15,7 @@ Also tracks which provider handled each call for comparison.
 from __future__ import annotations
 
 import logging
-from typing import Optional, Any
+from typing import Any
 
 from config import (
     ENSEMBLE_ENABLED,
@@ -153,7 +153,7 @@ class MultiProviderClient:
         self,
         prompt: str,
         use_cache: bool = True,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Text-only call with fallback across providers."""
         for name, client in self.providers:
             try:
@@ -183,7 +183,7 @@ class MultiProviderClient:
         image_data: list[dict],
         image_paths: list[str] | None = None,
         use_cache: bool = True,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Vision call with fallback across providers."""
         for name, client in self.providers:
             try:
@@ -214,7 +214,7 @@ class MultiProviderClient:
         prompt: str,
         image_data: list[dict],
         image_paths: list[str] | None = None,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Ask a different available provider for ambiguous visual evidence only."""
         self.second_opinion_requests += 1
         for name, client in self.providers:
@@ -234,7 +234,7 @@ class MultiProviderClient:
     def call_text_ensemble(
         self,
         prompt: str,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Text call with self-consistency check.
         
         Runs the prompt twice at different temperatures, compares results,
@@ -272,7 +272,7 @@ class MultiProviderClient:
         prompt: str,
         image_data: list[dict],
         image_paths: list[str] | None = None,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Vision call with optional multi-provider voting.
         
         For VLM calls, self-consistency is expensive. Instead, we boost
@@ -295,7 +295,7 @@ class MultiProviderClient:
         result["confidence"] = min(1.0, result.get("confidence", 0.5) * boost)
         return result
 
-    def _call_text_with_temp(self, prompt: str, temperature: float) -> Optional[dict]:
+    def _call_text_with_temp(self, prompt: str, temperature: float) -> dict | None:
         """Call text with modified temperature."""
         for name, client in self.providers:
             try:
@@ -312,7 +312,7 @@ class MultiProviderClient:
                 logger.debug(f"[Ensemble] {name} text at T={temperature} failed: {e}")
         return None
 
-    def _call_secondary_text(self, prompt: str) -> Optional[dict]:
+    def _call_secondary_text(self, prompt: str) -> dict | None:
         """Try a secondary provider for a second opinion."""
         if len(self.providers) < 2:
             return None
@@ -327,6 +327,7 @@ class MultiProviderClient:
                     logger.info(f"[Ensemble] secondary text opinion from {name}")
                     return result
             except Exception:
+
                 continue
         return None
 

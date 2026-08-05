@@ -65,10 +65,7 @@ def make_decision(
     )
 
     if claim_status == "not_enough_information" and not evidence.evidence_standard_met:
-        if not conflicting_damage and not right_object_visible:
-            visible_part = "unknown"
-            visible_issue = "unknown"
-        elif extraction.claimed_object_part in ("contents", "item"):
+        if (not conflicting_damage and not right_object_visible) or extraction.claimed_object_part in ("contents", "item"):
             visible_part = "unknown"
             visible_issue = "unknown"
     if claim_status == "contradicted" and fraud.has_wrong_object:

@@ -1,7 +1,9 @@
 """Print all sample claim labels for analysis."""
 import sys
+
 sys.path.insert(0, ".")
 from data_loader import load_sample_claims
+
 sc = load_sample_claims()
 for i, r in enumerate(sc):
     print(f"Case {i+1:02d} ({r['user_id']}): "

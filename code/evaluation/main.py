@@ -77,7 +77,7 @@ def run_evaluation(fresh: bool = False, no_run: bool = False):
             metrics = {}
         else:
             from main import run_pipeline
-            predictions_list, metrics = run_pipeline(
+            _predictions_list, metrics = run_pipeline(
                 claims_csv=SAMPLE_CLAIMS_CSV,
                 output_csv=sample_output,
                 mode="sample",
@@ -96,7 +96,7 @@ def run_evaluation(fresh: bool = False, no_run: bool = False):
 
     # Step 3: Load predictions
     predictions = []
-    with open(sample_output, "r", encoding="utf-8-sig") as f:
+    with open(sample_output, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             predictions.append({k.strip(): v.strip() for k, v in row.items()})
@@ -110,7 +110,7 @@ def run_evaluation(fresh: bool = False, no_run: bool = False):
     # Step 5: Load history and save new snapshot
     history_path = eval_dir / "metrics_history.json"
     history = _load_history(history_path)
-    eval_metrics["_timestamp"] = datetime.now().isoformat()
+    eval_metrics["_timestamp"] = datetime.now(datetime.timezone.utc).isoformat()
     _save_history(history_path, eval_metrics, history)
 
     # Step 6: Generate reports
@@ -152,7 +152,7 @@ def _save_history(path: Path, current: dict, history: list[dict]):
     for k, v in current.items():
         if isinstance(v, dict) and "accuracy" in v:
             snapshot[k] = {"accuracy": v["accuracy"], "correct": v["correct"], "total": v["total"]}
-    snapshot["_timestamp"] = current.get("_timestamp", datetime.now().isoformat())
+    snapshot["_timestamp"] = current.get("_timestamp", datetime.now(datetime.timezone.utc).isoformat())
     history.append(snapshot)
     if len(history) > 20:
         history = history[-20:]

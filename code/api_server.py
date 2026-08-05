@@ -1,14 +1,15 @@
 """FastAPI HTTP API for the Multi-Modal Evidence Review system."""
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent))
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from pipeline import process_claim
-from models import ClaimInput
 from evaluation.main import run_evaluation
+from models import ClaimInput
+from pipeline import process_claim
 
 app = FastAPI(
     title="Multi-Modal Evidence Review API",

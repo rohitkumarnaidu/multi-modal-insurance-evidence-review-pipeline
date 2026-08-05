@@ -284,10 +284,7 @@ def _check_vehicle_identity(
     color_score = 1.0
     if len(distinct_colors) > 1:
         valid_distinct = distinct_colors - {"unknown", ""}
-        if len(valid_distinct) > 1:
-            color_score = 0.15
-        else:
-            color_score = 0.8
+        color_score = 0.15 if len(valid_distinct) > 1 else 0.8
 
     types = []
     for a in usable:

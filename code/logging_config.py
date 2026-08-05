@@ -1,9 +1,8 @@
 import json
 import logging
 import logging.handlers
-from pathlib import Path
 from datetime import datetime, timezone
-
+from pathlib import Path
 
 LOG_DIR = Path(__file__).parent / "logs"
 LOG_DIR.mkdir(exist_ok=True)

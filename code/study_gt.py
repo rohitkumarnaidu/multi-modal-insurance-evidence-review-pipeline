@@ -4,10 +4,10 @@ import os
 
 dataset = r"c:\Hackathons\Hackerrank\Multi-Modal Evidence Review\hackerrank-orchestrate-june26\dataset"
 
-with open(os.path.join(dataset, "sample_claims.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "sample_claims.csv"), encoding="utf-8-sig") as f:
     claims = {r["user_id"]: r for r in csv.DictReader(f)}
 
-with open(os.path.join(dataset, "sample_output.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "sample_output.csv"), encoding="utf-8-sig") as f:
     gt = {r["user_id"]: r for r in csv.DictReader(f)}
 
 focus = ["user_002","user_003","user_004","user_005","user_007","user_008","user_032","user_033","user_034","user_018"]

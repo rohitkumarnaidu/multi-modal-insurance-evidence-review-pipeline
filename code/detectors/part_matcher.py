@@ -44,7 +44,6 @@ def _load_model():
 
 
 def _build_part_embeddings():
-    global _PART_EMBEDDINGS
     if _PART_EMBEDDINGS:
         return _PART_EMBEDDINGS
 

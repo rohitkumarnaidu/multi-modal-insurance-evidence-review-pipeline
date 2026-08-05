@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import logging
 import os
-from typing import Optional
 
 # Suppress Ultralytics auto-install spam
 os.environ["ULTRALYTICS_NO_INSTALL"] = "1"
@@ -63,7 +62,7 @@ def _load_model():
     return _MODEL
 
 
-def detect_objects(image_path: str) -> Optional[dict]:
+def detect_objects(image_path: str) -> dict | None:
     """Detect objects in image using YOLOv8n.
 
     Args:
@@ -91,7 +90,7 @@ def detect_objects(image_path: str) -> Optional[dict]:
                 conf = float(box.conf[0])
                 label = model.names.get(cls_id, "unknown")
 
-                obj_type = _COCO_TO_OBJECT.get(cls_id, None)
+                obj_type = _COCO_TO_OBJECT.get(cls_id)
                 if obj_type is None:
                     if cls_id in _VEHICLE_IDS:
                         obj_type = "car"

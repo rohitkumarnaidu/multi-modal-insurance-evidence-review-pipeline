@@ -16,6 +16,7 @@ def analyze_exif(image_path: str) -> dict:
         img = Image.open(image_path)
         exif_data = img.getexif()
     except Exception:
+
         return result
 
     if not exif_data:

@@ -23,7 +23,7 @@ from detectors.cv_quality import analyze_image_quality
 from detectors.ela import analyze_ela
 from detectors.exif_analyzer import analyze_exif
 from detectors.yolo_detector import detect_objects
-from engines.claim_engine import _fuzzy_match_part, _fuzzy_match_issue
+from engines.claim_engine import _fuzzy_match_issue, _fuzzy_match_part
 from models import ClaimInput, ImageAnalysis, normalize_vision_payload
 
 logger = logging.getLogger(__name__)
@@ -300,7 +300,7 @@ def _normalize_damage_evidence_level(raw: str, visible_issue: str, is_usable: bo
         return raw
     if not is_usable:
         return "unusable"
-    if visible_issue in ("none",):
+    if visible_issue == "none":
         return "not_visible"
     if visible_issue in ("unknown", ""):
         return "partial"

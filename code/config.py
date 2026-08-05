@@ -14,7 +14,7 @@ from typing import Final
 _CODE_DIR_EARLY = Path(__file__).resolve().parent
 _env_file = _CODE_DIR_EARLY / ".env"
 if _env_file.exists():
-    with open(_env_file, "r", encoding="utf-8") as _f:
+    with open(_env_file, encoding="utf-8") as _f:
         for _line in _f:
             _line = _line.strip()
             if _line and not _line.startswith("#") and "=" in _line:
@@ -79,8 +79,8 @@ RETRY_MAX_DELAY: Final = 60.0   # seconds
 INTER_CLAIM_DELAY: Final = 1.0  # seconds between claims
 
 # Parallel Processing & Batching
-MAX_WORKERS: Final = int(os.environ.get("MAX_WORKERS", 4))
-BATCH_SIZE: Final = int(os.environ.get("BATCH_SIZE", 5))     # Process N claims concurrently
+MAX_WORKERS: Final = int(os.environ.get("MAX_WORKERS", "4"))
+BATCH_SIZE: Final = int(os.environ.get("BATCH_SIZE", "5"))     # Process N claims concurrently
 BATCH_DELAY: Final = float(os.environ.get("BATCH_DELAY", 1.0)) # seconds between batches
 
 # Vision uploads are normalized before being sent to providers. This keeps

@@ -4,13 +4,13 @@ import os
 
 dataset = r"c:\Hackathons\Hackerrank\Multi-Modal Evidence Review\hackerrank-orchestrate-june26\dataset"
 
-with open(os.path.join(dataset, "sample_output.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "sample_output.csv"), encoding="utf-8-sig") as f:
     gt = {r["user_id"]: r for r in csv.DictReader(f)}
 
-with open(os.path.join(dataset, "output_nvidia.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "output_nvidia.csv"), encoding="utf-8-sig") as f:
     pred = {r["user_id"]: r for r in csv.DictReader(f)}
 
-with open(os.path.join(dataset, "sample_claims.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "sample_claims.csv"), encoding="utf-8-sig") as f:
     sample_claims = {r["user_id"]: r for r in csv.DictReader(f)}
 
 print(f"Ground truth users ({len(gt)}): {sorted(gt.keys())}")
@@ -19,7 +19,7 @@ print(f"Sample claim users ({len(sample_claims)}): {sorted(sample_claims.keys())
 print()
 
 # Show duplicate user_ids in output_nvidia.csv
-with open(os.path.join(dataset, "output_nvidia.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "output_nvidia.csv"), encoding="utf-8-sig") as f:
     all_rows = list(csv.DictReader(f))
 uid_counts: dict[str, int] = {}
 for r in all_rows:
@@ -35,7 +35,7 @@ print(f"Missing from pred: {missing}")
 print()
 
 # GT columns
-first_gt = list(gt.values())[0]
+first_gt = next(iter(gt.values()))
 print(f"GT columns: {list(first_gt.keys())}")
 print()
 
@@ -46,7 +46,7 @@ print("=" * 100)
 
 for uid in sorted(gt.keys()):
     g = gt[uid]
-    p = pred.get(uid, None)
+    p = pred.get(uid)
     co = g.get("claim_object", "?")
     
     print(f"\n--- {uid} ({co}) ---")

@@ -106,7 +106,7 @@ def partial_credit_object_part(
     }
 
     def same_category(a: str, b: str) -> bool:
-        for obj, categories in part_categories.items():
+        for categories in part_categories.values():
             for cat in categories:
                 if a in cat and b in cat:
                     return True
@@ -287,7 +287,7 @@ def _parse_flags(flags_str: str) -> set[str]:
 
 def generate_html_report(metrics: dict, history: list[dict] | None = None) -> str:
     """Generate a standalone HTML report with styled tables and confusion matrices."""
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
     acc_rows = ""
     for key in sorted(metrics.keys()):
@@ -461,7 +461,7 @@ a {{ color: #60a5fa; }}
 <h2>Error Details</h2>
 <table>
 <tr><th>Field</th><th>Row</th><th>Predicted</th><th>Expected</th></tr>
-{error_rows if error_rows else '<tr><td colspan="4" style="text-align:center;color:#64748b">No errors</td></tr>'}
+{error_rows or '<tr><td colspan="4" style="text-align:center;color:#64748b">No errors</td></tr>'}
 </table>
 </div>
 

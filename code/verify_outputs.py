@@ -23,7 +23,7 @@ for fname in files:
         print(f"❌ {fname} — NOT FOUND")
         continue
     
-    with open(fname, "r", encoding="utf-8-sig") as f:
+    with open(fname, encoding="utf-8-sig") as f:
         reader = list(csv.DictReader(f))
     
     cols = list(reader[0].keys()) if reader else []
@@ -50,7 +50,7 @@ for fname in files:
 
 # Column check
 print("\n=== COLUMN CHECK (output.csv) ===")
-with open("output.csv", "r", encoding="utf-8-sig") as f:
+with open("output.csv", encoding="utf-8-sig") as f:
     reader = list(csv.DictReader(f))
     cols = list(reader[0].keys())
 

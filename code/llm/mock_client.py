@@ -11,7 +11,7 @@ class MockLLMClient:
         # Load the mock data that we generated
         mock_file = Path(__file__).resolve().parent.parent.parent / "dataset" / "mock_data.json"
         if mock_file.exists():
-            with open(mock_file, "r") as f:
+            with open(mock_file) as f:
                 self.mock_data = json.load(f)
         else:
             self.mock_data = {}
@@ -35,9 +35,10 @@ class MockLLMClient:
         # We can actually just rely on the text prompt having the exact user_claim string!
         # Let's map user_claims to user_ids by reloading sample_claims.csv
         try:
-            from config import SAMPLE_CLAIMS_CSV
             import csv
-            with open(SAMPLE_CLAIMS_CSV, "r", encoding="utf-8-sig") as f:
+
+            from config import SAMPLE_CLAIMS_CSV
+            with open(SAMPLE_CLAIMS_CSV, encoding="utf-8-sig") as f:
                 for row in csv.DictReader(f):
                     if row["user_claim"] in prompt or (image_paths and any(p in row["image_paths"] for p in image_paths)):
                         return row["user_id"]

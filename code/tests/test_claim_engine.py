@@ -5,10 +5,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from engines.claim_engine import (
-    extract_claim_text_only, _fuzzy_match_part, _fuzzy_match_issue,
-)
 from config import CAR_OBJECT_PARTS, LAPTOP_OBJECT_PARTS, PACKAGE_OBJECT_PARTS
+from engines.claim_engine import (
+    _fuzzy_match_issue,
+    _fuzzy_match_part,
+    extract_claim_text_only,
+)
 from models import ClaimInput
 
 

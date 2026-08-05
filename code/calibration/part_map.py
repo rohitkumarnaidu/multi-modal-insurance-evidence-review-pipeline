@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-
 PART_OVERRIDES = {
     ("laptop", "screen", "lid"): "screen",
     ("laptop", "hinge", "lid"): "hinge",

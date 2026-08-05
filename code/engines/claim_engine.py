@@ -175,10 +175,11 @@ def _fuzzy_match_part(raw: str, allowed: set[str] | frozenset[str]) -> str:
     # Sentence transformer fallback for synonyms/multilingual
     try:
         from detectors.part_matcher import match_part
-        matched, score = match_part(raw_lower, allowed, threshold=0.55)
+        matched, _score = match_part(raw_lower, allowed, threshold=0.55)
         if matched != raw_lower and matched in allowed:
             return matched
     except Exception:
+
         pass
 
     return "unknown"

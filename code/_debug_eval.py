@@ -1,4 +1,5 @@
 import csv
+
 from config import DATASET_DIR, SAMPLE_CLAIMS_CSV
 
 # Load predictions

@@ -8,7 +8,6 @@ must still come from the image analysis.
 
 from __future__ import annotations
 
-
 GLASS_PARTS = {"windshield", "screen"}
 LIGHT_OR_MIRROR_PARTS = {"headlight", "taillight", "side_mirror"}
 PACKAGE_SURFACE_PARTS = {"box", "package_corner", "package_side"}

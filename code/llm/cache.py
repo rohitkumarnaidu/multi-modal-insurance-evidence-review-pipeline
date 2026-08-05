@@ -10,7 +10,6 @@ import hashlib
 import json
 import logging
 from pathlib import Path
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -33,13 +32,13 @@ class ResponseCache:
         content = "|".join(parts)
         return hashlib.sha256(content.encode()).hexdigest()[:24]
 
-    def get(self, prompt: str, image_paths: list[str] | None = None) -> Optional[dict]:
+    def get(self, prompt: str, image_paths: list[str] | None = None) -> dict | None:
         """Retrieve cached response if exists."""
         key = self._make_key(prompt, image_paths)
         cache_file = self.cache_dir / f"{key}.json"
         if cache_file.exists():
             try:
-                with open(cache_file, "r", encoding="utf-8") as f:
+                with open(cache_file, encoding="utf-8") as f:
                     data = json.load(f)
                 self.hits += 1
                 logger.debug(f"Cache HIT: {key}")

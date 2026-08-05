@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-
 from config import CLAIMS_CSV, OUTPUT_CSV
 from output_validation import load_and_validate_output
-
 
 rows, errors = load_and_validate_output(
     OUTPUT_CSV,

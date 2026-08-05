@@ -1,7 +1,8 @@
 import logging
 from pathlib import Path
-from PIL import Image
+
 import imagehash
+from PIL import Image
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +47,7 @@ def are_images_similar(hash1: str, hash2: str, threshold: int = 10) -> bool:
         h2 = imagehash.hex_to_hash(hash2)
         return (h1 - h2) < threshold
     except Exception:
+
         return False
 
 def find_duplicates(image_paths: list[str]) -> list[tuple[int, int, int]]:

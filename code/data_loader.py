@@ -10,7 +10,6 @@ import base64
 import csv
 import logging
 from pathlib import Path
-from typing import Optional
 
 from config import (
     CLAIMS_CSV,
@@ -30,7 +29,7 @@ def load_claims(csv_path: Path | None = None) -> list[ClaimInput]:
     """Load claims from CSV file."""
     path = csv_path or CLAIMS_CSV
     claims = []
-    with open(path, "r", encoding="utf-8-sig") as f:
+    with open(path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -51,7 +50,7 @@ def load_sample_claims(csv_path: Path | None = None) -> list[dict]:
     """Load sample claims with labels (ground truth)."""
     path = csv_path or SAMPLE_CLAIMS_CSV
     rows = []
-    with open(path, "r", encoding="utf-8-sig") as f:
+    with open(path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             # Strip all values
@@ -65,7 +64,7 @@ def load_user_history(csv_path: Path | None = None) -> dict[str, UserHistory]:
     """Load user history, indexed by user_id."""
     path = csv_path or USER_HISTORY_CSV
     history: dict[str, UserHistory] = {}
-    with open(path, "r", encoding="utf-8-sig") as f:
+    with open(path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -90,7 +89,7 @@ def load_evidence_requirements(csv_path: Path | None = None) -> list[EvidenceReq
     """Load evidence requirements."""
     path = csv_path or EVIDENCE_REQUIREMENTS_CSV
     reqs = []
-    with open(path, "r", encoding="utf-8-sig") as f:
+    with open(path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -107,7 +106,7 @@ def load_evidence_requirements(csv_path: Path | None = None) -> list[EvidenceReq
     return reqs
 
 
-def load_image_as_base64(image_path: str) -> Optional[str]:
+def load_image_as_base64(image_path: str) -> str | None:
     """Load an image file and return its base64-encoded string.
     
     image_path is relative to the dataset/ directory.
@@ -136,7 +135,7 @@ def load_image_for_vision(
     image_path: str,
     max_long_edge: int = VISION_MAX_LONG_EDGE,
     jpeg_quality: int = VISION_JPEG_QUALITY,
-) -> Optional[tuple[str, str]]:
+) -> tuple[str, str] | None:
     """Prepare a bounded JPEG upload without altering the source evidence file."""
     import io
 

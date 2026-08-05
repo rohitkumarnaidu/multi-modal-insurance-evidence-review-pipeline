@@ -1,11 +1,12 @@
 """Compare predicted vs ground truth per-case."""
 import csv
 import sys
+
 sys.path.insert(0, ".")
 
-with open("../dataset/sample_output_nvidia_v4.csv", "r", encoding="utf-8-sig") as f:
+with open("../dataset/sample_output_nvidia_v4.csv", encoding="utf-8-sig") as f:
     preds = {r["user_id"]: r for r in csv.DictReader(f)}
-with open("../dataset/sample_claims.csv", "r", encoding="utf-8-sig") as f:
+with open("../dataset/sample_claims.csv", encoding="utf-8-sig") as f:
     truth = {r["user_id"]: r for r in csv.DictReader(f)}
 
 fields = ["claim_status", "issue_type", "object_part", "severity", "evidence_standard_met"]

@@ -1,8 +1,8 @@
+# ruff: noqa: F403, F405, F821, E402
 """
 Dry-run validation of the full pipeline logic.
 Tests all deterministic engines without making API calls.
 """
-# ruff: noqa: F403, F405, F821, E402
 import csv
 import os
 import sys
@@ -13,7 +13,11 @@ sys.path.insert(0, ".")
 
 from config import *
 from data_loader import *
-from engines.claim_engine import _fuzzy_match_issue, _fuzzy_match_part, extract_claim_text_only
+from engines.claim_engine import (
+    _fuzzy_match_issue,
+    _fuzzy_match_part,
+    extract_claim_text_only,
+)
 from engines.decision_engine import make_decision
 from engines.fraud_engine import detect_fraud
 from engines.quality_engine import assess_image_quality
@@ -220,7 +224,7 @@ print("[OK] Output validation: risk flags sorted and deduplicated")
 # 10. Test CSV output format
 tmp = Path(tempfile.gettempdir()) / "test_output.csv"
 write_output_csv([row], tmp)
-with open(tmp, "r") as f:
+with open(tmp) as f:
     reader = csv.DictReader(f)
     cols = reader.fieldnames
     expected_cols = [

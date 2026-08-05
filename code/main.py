@@ -22,6 +22,8 @@ from config import (
     METRICS_LOG,
     OUTPUT_CSV,
     SAMPLE_CLAIMS_CSV,
+)
+from config import (
     MAX_WORKERS as DEFAULT_MAX_WORKERS,
 )
 from data_loader import (
@@ -41,6 +43,7 @@ from engines.vision_engine import analyze_all_images
 from llm.multi_provider_client import MultiProviderClient
 from models import ClaimOutput
 
+
 class SafeStreamHandler(logging.StreamHandler):
     """Stream handler that replaces unicode chars instead of crashing."""
     def emit(self, record):
@@ -51,6 +54,7 @@ class SafeStreamHandler(logging.StreamHandler):
             try:
                 self.stream.write(msg.encode("utf-8", errors="replace").decode("utf-8", errors="replace") + "\n")
             except Exception:
+
                 self.handleError(record)
 
 logging.basicConfig(
@@ -187,7 +191,7 @@ def run_pipeline(
     existing_results: dict[str, ClaimOutput] = {}
     if retry_failed and output_csv.exists():
         import csv
-        with open(output_csv, "r", encoding="utf-8-sig") as f:
+        with open(output_csv, encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 uid = row.get("user_id", "")
@@ -272,10 +276,11 @@ def run_pipeline(
     else:
         for i, claim in enumerate(claims):
             if provider == "mock":
-                from config import SAMPLE_CLAIMS_CSV
                 import csv
+
+                from config import SAMPLE_CLAIMS_CSV
                 found = False
-                with open(SAMPLE_CLAIMS_CSV, "r", encoding="utf-8-sig") as f:
+                with open(SAMPLE_CLAIMS_CSV, encoding="utf-8-sig") as f:
                     for r in csv.DictReader(f):
                         if r["user_id"] == claim.user_id:
                             output = ClaimOutput(

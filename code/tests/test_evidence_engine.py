@@ -7,7 +7,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from engines.evidence_engine import check_evidence_sufficiency
 from models import (
-    ClaimExtraction, ClaimInput, EvidenceRequirement, ImageAnalysis,
+    ClaimExtraction,
+    ClaimInput,
+    EvidenceRequirement,
+    ImageAnalysis,
 )
 
 

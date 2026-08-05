@@ -4,10 +4,10 @@ import os
 
 dataset = r"c:\Hackathons\Hackerrank\Multi-Modal Evidence Review\hackerrank-orchestrate-june26\dataset"
 
-with open(os.path.join(dataset, "sample_output.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "sample_output.csv"), encoding="utf-8-sig") as f:
     gt = {r["user_id"]: r for r in csv.DictReader(f)}
 
-with open(os.path.join(dataset, "sample_output_nvidia_latest.csv"), "r", encoding="utf-8-sig") as f:
+with open(os.path.join(dataset, "sample_output_nvidia_latest.csv"), encoding="utf-8-sig") as f:
     pred = {r["user_id"]: r for r in csv.DictReader(f)}
 
 fields = ["claim_status", "evidence_standard_met", "issue_type", "object_part", "severity", "valid_image"]
@@ -42,8 +42,8 @@ tp = fp = fn = 0
 for uid in sorted(gt.keys()):
     if uid not in pred:
         continue
-    gt_flags = set(f.strip() for f in gt[uid].get("risk_flags", "").split(";") if f.strip() and f.strip() != "none")
-    pred_flags = set(f.strip() for f in pred[uid].get("risk_flags", "").split(";") if f.strip() and f.strip() != "none")
+    gt_flags = {f.strip() for f in gt[uid].get("risk_flags", "").split(";") if f.strip() and f.strip() != "none"}
+    pred_flags = {f.strip() for f in pred[uid].get("risk_flags", "").split(";") if f.strip() and f.strip() != "none"}
     tp += len(gt_flags & pred_flags)
     fp += len(pred_flags - gt_flags)
     fn += len(gt_flags - pred_flags)

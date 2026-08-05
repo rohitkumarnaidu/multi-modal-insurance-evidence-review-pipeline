@@ -7,8 +7,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from engines.decision_engine import make_decision
 from models import (
-    ClaimExtraction, ClaimInput, EvidenceSufficiency,
-    FraudSignals, ImageAnalysis,
+    ClaimExtraction,
+    ClaimInput,
+    EvidenceSufficiency,
+    FraudSignals,
+    ImageAnalysis,
 )
 
 

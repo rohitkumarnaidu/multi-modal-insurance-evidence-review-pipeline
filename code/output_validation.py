@@ -5,8 +5,13 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
-from config import CLAIM_STATUSES, ISSUE_TYPES, OBJECT_PARTS_BY_TYPE, RISK_FLAGS, SEVERITIES
-
+from config import (
+    CLAIM_STATUSES,
+    ISSUE_TYPES,
+    OBJECT_PARTS_BY_TYPE,
+    RISK_FLAGS,
+    SEVERITIES,
+)
 
 OUTPUT_COLUMNS = [
     "user_id", "image_paths", "user_claim", "claim_object",
@@ -76,7 +81,7 @@ def validate_output_rows(rows: list[dict], expected_rows: int | None = None) -> 
 
 
 def load_and_validate_output(path: Path, expected_rows: int | None = None) -> tuple[list[dict], list[str]]:
-    with open(path, "r", encoding="utf-8-sig", newline="") as file:
+    with open(path, encoding="utf-8-sig", newline="") as file:
         reader = csv.DictReader(file)
         rows = list(reader)
         columns = reader.fieldnames or []

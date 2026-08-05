@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import io
 import logging
+
 from PIL import Image, ImageChops, ImageStat
 
 logger = logging.getLogger(__name__)

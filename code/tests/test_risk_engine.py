@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from engines.risk_engine import get_user_risk_flags, get_risk_summary
+from engines.risk_engine import get_risk_summary, get_user_risk_flags
 from models import UserHistory
 
 

@@ -79,7 +79,7 @@ def main():
     provider_rows = {}
     for p, path in output_files.items():
         import csv
-        with open(path, "r", encoding="utf-8-sig") as f:
+        with open(path, encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             provider_rows[p] = [{k.strip(): v.strip() for k, v in row.items()} for row in reader]
 

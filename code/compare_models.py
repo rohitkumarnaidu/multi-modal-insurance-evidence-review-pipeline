@@ -21,15 +21,14 @@ from __future__ import annotations
 
 import argparse
 import csv
-from collections import Counter
-from typing import Any
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from config import DATASET_DIR, CODE_DIR
-
+from config import CODE_DIR, DATASET_DIR
 
 PROVIDERS = ["gemini", "groq", "openrouter", "nvidia"]
 COMPARE_FIELDS = ["claim_status", "issue_type", "object_part", "severity"]
@@ -52,7 +51,7 @@ def run_provider(provider: str) -> bool:
     try:
         result = subprocess.run(
             cmd,
-            cwd=str(CODE_DIR),
+            cwd=str(CODE_DIR, check=False),
             timeout=1800,  # 30 min timeout per provider
         )
         if result.returncode == 0:
@@ -75,7 +74,7 @@ def load_output(provider: str) -> dict[str, dict]:
     if not csv_path.exists():
         return {}
     rows = {}
-    with open(csv_path, "r", encoding="utf-8-sig") as f:
+    with open(csv_path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             uid = row.get("user_id", "")
@@ -114,8 +113,8 @@ def generate_comparison_report(providers: list[str]):
     comparison_rows = []
     agreement_count = 0
     disagreement_count = 0
-    field_agreements = {f: 0 for f in COMPARE_FIELDS}
-    field_disagreements = {f: 0 for f in COMPARE_FIELDS}
+    field_agreements = dict.fromkeys(COMPARE_FIELDS, 0)
+    field_disagreements = dict.fromkeys(COMPARE_FIELDS, 0)
 
     for uid in all_users:
         row = {"user_id": uid}
@@ -140,7 +139,7 @@ def generate_comparison_report(providers: list[str]):
                 row[f"{field}_{p}"] = values.get(p, "MISSING")
 
             # Check agreement
-            unique_values = set(v for v in values.values() if v not in ("MISSING", "unknown"))
+            unique_values = {v for v in values.values() if v not in ("MISSING", "unknown")}
             if len(unique_values) <= 1:
                 row[f"{field}_consensus"] = "✓ AGREE"
                 field_agreements[field] += 1

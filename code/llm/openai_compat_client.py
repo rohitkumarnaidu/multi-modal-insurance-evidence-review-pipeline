@@ -17,7 +17,6 @@ from __future__ import annotations
 import json
 import logging
 import time
-from typing import Optional
 
 from config import (
     RETRY_BASE_DELAY,
@@ -55,6 +54,7 @@ class OpenAICompatClient:
 
         self._current_key_idx = 0
         from openai import OpenAI
+
         from llm.rate_limiter import SimpleRateLimiter
 
         self.provider_name = provider_name
@@ -108,7 +108,7 @@ class OpenAICompatClient:
         self,
         prompt: str,
         use_cache: bool = True,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Text-only LLM call for claim extraction."""
         if use_cache:
             cached = self.cache.get(prompt)
@@ -127,7 +127,7 @@ class OpenAICompatClient:
         image_data: list[dict],
         image_paths: list[str] | None = None,
         use_cache: bool = True,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """VLM call with one or more images."""
         cache_paths = image_paths or []
         if use_cache:
@@ -146,7 +146,7 @@ class OpenAICompatClient:
         prompt: str,
         images: list[dict] | None = None,
         use_vision: bool = False,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Execute API call with exponential backoff retry."""
         text = ""
         model = self.vision_model if use_vision else self.text_model
@@ -202,12 +202,9 @@ class OpenAICompatClient:
                 # Parse response
                 text = response.choices[0].message.content or ""
                 text = text.strip()
-                if text.startswith("```json"):
-                    text = text[7:]
-                if text.startswith("```"):
-                    text = text[3:]
-                if text.endswith("```"):
-                    text = text[:-3]
+                text = text.removeprefix("```json")
+                text = text.removeprefix("```")
+                text = text.removesuffix("```")
                 text = text.strip()
 
                 parsed = json.loads(text)
@@ -313,6 +310,7 @@ class OpenAICompatClient:
         """
         import base64
         import io
+
         from PIL import Image
 
         raw = base64.b64decode(b64_data)

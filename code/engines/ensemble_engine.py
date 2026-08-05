@@ -13,7 +13,6 @@ import csv
 import logging
 from collections import Counter
 from pathlib import Path
-from typing import Optional
 
 from config import OUTPUT_CSV
 from data_loader import write_output_csv
@@ -34,7 +33,7 @@ VOTING_FIELDS = [
 def run_ensemble(
     output_files: dict[str, Path],
     ensemble_output: Path = OUTPUT_CSV,
-    sample_ground_truth: Optional[list[dict]] = None,
+    sample_ground_truth: list[dict] | None = None,
 ) -> list[dict]:
     """Run ensemble voting across multiple provider outputs.
 
@@ -49,7 +48,7 @@ def run_ensemble(
     # Load all provider outputs
     provider_rows: dict[str, list[dict]] = {}
     for provider, path in output_files.items():
-        with open(path, "r", encoding="utf-8-sig") as f:
+        with open(path, encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             rows = [{k.strip(): v.strip() for k, v in row.items()} for row in reader]
             provider_rows[provider] = rows
@@ -63,7 +62,7 @@ def run_ensemble(
     if len(set(row_counts.values())) != 1:
         raise ValueError(f"Row count mismatch: {row_counts}")
 
-    num_rows = list(provider_rows.values())[0].__len__()
+    num_rows = next(iter(provider_rows.values())).__len__()
     providers = list(provider_rows.keys())
 
     # For each row, vote across providers
@@ -168,7 +167,7 @@ def analyze_ensemble_agreement(
 ) -> dict:
     """Analyze how well providers agree with each other."""
     providers = list(provider_rows.keys())
-    num_rows = len(list(provider_rows.values())[0])
+    num_rows = len(next(iter(provider_rows.values())))
 
     # Pairwise agreement per field
     pairwise: dict[str, dict[str, float]] = {}

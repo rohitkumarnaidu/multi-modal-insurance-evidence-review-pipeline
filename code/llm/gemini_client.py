@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 import logging
 import time
-from typing import Any, Optional
+from typing import Any
 
 from config import (
     GEMINI_API_KEYS,
@@ -79,6 +79,7 @@ class GeminiClient:
                 "No Gemini API keys found. Set GEMINI_API_KEYS via environment variables."
             )
         from google import genai
+
         from llm.rate_limiter import KeyRateLimiter
 
         self._genai = genai
@@ -125,7 +126,7 @@ class GeminiClient:
         self,
         prompt: str,
         use_cache: bool = True,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Call 1: Text-only LLM call for claim extraction.
 
         Returns parsed JSON dict or None on failure.
@@ -149,7 +150,7 @@ class GeminiClient:
         image_data: list[dict],  # [{"mime_type": ..., "data": base64_str}]
         image_paths: list[str] | None = None,
         use_cache: bool = True,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Call 2: VLM call with one or more images.
 
         image_data: list of {"mime_type": str, "data": base64_str}
@@ -171,7 +172,7 @@ class GeminiClient:
         self,
         prompt: str,
         images: list[dict] | None = None,
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Execute API call with exponential backoff retry and smart key rotation."""
         import re as _re
 
@@ -231,12 +232,9 @@ class GeminiClient:
 
                 # Parse JSON response
                 text = response.text.strip()
-                if text.startswith("```json"):
-                    text = text[7:]
-                if text.startswith("```"):
-                    text = text[3:]
-                if text.endswith("```"):
-                    text = text[:-3]
+                text = text.removeprefix("```json")
+                text = text.removeprefix("```")
+                text = text.removesuffix("```")
                 text = text.strip()
 
                 parsed = json.loads(text)

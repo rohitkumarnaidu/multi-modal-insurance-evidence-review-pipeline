@@ -7,7 +7,6 @@ VLM gives an allowed issue but an unknown or implausible severity.
 
 from __future__ import annotations
 
-
 VALID_SEVERITIES = {"none", "low", "medium", "high", "unknown"}
 
 

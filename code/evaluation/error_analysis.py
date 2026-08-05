@@ -11,7 +11,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from config import DATASET_DIR
 
-
 FIELDS = [
     "claim_status", "evidence_standard_met", "risk_flags", "issue_type",
     "object_part", "severity", "supporting_image_ids", "valid_image",
