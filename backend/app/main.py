@@ -1,8 +1,9 @@
+import os
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "code"))
 
-from fastapi import FastAPI, File, UploadFile, Form, BackgroundTasks
+from fastapi import FastAPI, File, UploadFile, Form, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -20,14 +21,27 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enable CORS for the frontend dashboard
+# Zero Trust CORS Configuration: Explicit origin allowlist (NIST SP 800-207)
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "")
+if allowed_origins_env.strip():
+    allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+else:
+    allowed_origins = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust in prod
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
+ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp"}
 
 class ClaimResponse(BaseModel):
     user_id: str
@@ -56,8 +70,13 @@ async def submit_claim(
     
     image_paths = []
     for image in images:
-        ext = image.filename.split('.')[-1] if image.filename else "jpg"
-        file_path = upload_dir / f"{uuid.uuid4()}.{ext}"
+        raw_ext = (image.filename.split('.')[-1] if image.filename else "jpg").lower()
+        if raw_ext not in ALLOWED_IMAGE_EXTENSIONS:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unsupported file format '{raw_ext}'. Allowed formats: {', '.join(sorted(ALLOWED_IMAGE_EXTENSIONS))}"
+            )
+        file_path = upload_dir / f"{uuid.uuid4()}.{raw_ext}"
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(image.file, buffer)
         image_paths.append(str(file_path))
